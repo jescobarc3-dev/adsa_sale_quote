@@ -311,10 +311,10 @@
 
                         <!-- Tarjetas de módulos (primeras 3 líneas) -->
                         <div class="sol-mods">
-                            <t t-set="sol_colors" t-value="['green','cyan','purple']"/>
+                            <t t-set="sol_color_map" t-value="{'ok': 'green', 'wip': 'cyan', 'svc': 'purple'}"/>
                             <t t-foreach="o.adsa_solution_lines()" t-as="sol_line">
                                 <t t-set="sol_tmpl" t-value="sol_line.product_id.product_tmpl_id"/>
-                                <t t-set="sol_color" t-value="sol_colors[sol_line_index] if sol_line_index &lt; 3 else 'cyan'"/>
+                                <t t-set="sol_color" t-value="sol_color_map.get(sol_tmpl.adsa_quote_status or 'wip', 'cyan')"/>
                                 <div t-attf-class="sol-mod sol-mod-#{sol_color}">
                                     <div class="sol-mod-img">
                                         <div class="sol-mod-num"><t t-esc="sol_tmpl.adsa_quote_num or str(sol_line_index + 1).zfill(2)"/></div>
