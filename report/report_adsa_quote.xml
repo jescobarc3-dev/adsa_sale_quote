@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Acción de reporte ── -->
+    <record id="action_report_adsa_sale_quote" model="ir.actions.report">
+        <field name="name">Propuesta Comercial ADSA</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">adsa_sale_quote.report_sale_quote</field>
+        <field name="report_file">adsa_sale_quote.report_sale_quote</field>
+        <field name="paperformat_id" ref="paperformat_adsa_letter"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════
+         MACROS / HELPERS
+         ══════════════════════════════════════════════════════ -->
+
+    <!-- SVGs de iconos reutilizables -->
+    <template id="icon_svg">
+        <t t-set="ic_s" t-value="ic_size or 16"/>
+        <t t-set="ic_c" t-value="ic_color or '#06B6D4'"/>
+        <t t-if="ic_name == 'cloud'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.3A6 6 0 105 15.9V16h13a3 3 0 000-6z"/></svg>
+        </t>
+        <t t-elif="ic_name == 'ticket'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 010-6h20a3 3 0 010 6M2 15a3 3 0 000 6h20a3 3 0 000-6"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        </t>
+        <t t-elif="ic_name == 'truck'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </t>
+        <t t-elif="ic_name == 'building'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M9 22V12h6v10M3 9h18M9 5h.01M15 5h.01"/></svg>
+        </t>
+        <t t-elif="ic_name == 'chart'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </t>
+        <t t-elif="ic_name == 'warning'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.7L2 19h20L13.7 3.7a2 2 0 00-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </t>
+        <t t-elif="ic_name == 'cost'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </t>
+        <t t-elif="ic_name == 'check'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </t>
+        <t t-elif="ic_name == 'rocket'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2l14-14a4.5 4.5 0 00-6-6L4.5 16.5z"/></svg>
+        </t>
+        <t t-elif="ic_name == 'shield'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </t>
+        <t t-elif="ic_name == 'info'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </t>
+        <t t-elif="ic_name == 'gear'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-2.82 1.17V21a2 2 0 01-4 0v-.09A1.65 1.65 0 008 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 003.4 15a1.65 1.65 0 00-1.5-1.65H1.5a2 2 0 010-4h.09A1.65 1.65 0 004.6 8a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 3.6a1.65 1.65 0 001.65-1.5V1.5a2 2 0 014 0v.09A1.65 1.65 0 0016 4.6a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 15z"/></svg>
+        </t>
+        <t t-elif="ic_name == 'users'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </t>
+        <t t-elif="ic_name == 'hand'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 00-7.65 0l-.77.78-.77-.78a5.4 5.4 0 00-7.65 7.65l.77.78L12 21.23l7.65-7.64.77-.78a5.4 5.4 0 000-7.65v-.18z"/></svg>
+        </t>
+        <t t-elif="ic_name == 'calendar'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </t>
+        <t t-elif="ic_name == 'dollar'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </t>
+        <t t-elif="ic_name == 'link'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+        </t>
+        <t t-elif="ic_name == 'puzzle'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </t>
+        <t t-elif="ic_name == 'server'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        </t>
+        <t t-elif="ic_name == 'mobile'">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </t>
+        <t t-else="">
+            <svg t-att-width="ic_s" t-att-height="ic_s" viewBox="0 0 24 24" fill="none" t-att-stroke="ic_c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </t>
+    </template>
+
+    <!-- Badge de estado -->
+    <template id="status_badge">
+        <t t-if="status == 'ok'"><span class="badge b-ok">IMPLEMENTADO ✓</span></t>
+        <t t-elif="status == 'wip'"><span class="badge b-wip">EN IMPLEMENTACIÓN</span></t>
+        <t t-else=""><span class="badge b-svc">SERVICIO CONTINUO</span></t>
+    </template>
+
+    <!-- Header estándar -->
+    <template id="page_header">
+        <header class="adsa-hdr">
+            <div class="adsa-hdr-txt">
+                <h2 t-esc="hdr_title"/>
+                <p t-esc="hdr_sub"/>
+            </div>
+            <t t-if="hdr_status">
+                <div class="adsa-hdr-badge">
+                    <t t-call="adsa_sale_quote.status_badge">
+                        <t t-set="status" t-value="hdr_status"/>
+                    </t>
+                </div>
+            </t>
+        </header>
+    </template>
+
+    <!-- Footer estándar (con paginación) -->
+    <template id="page_footer">
+        <footer class="adsa-ftr">
+            <t t-if="not ftr_is_last">
+                <div class="adsa-ftr-page">Pág. <t t-esc="ftr_n"/> / <t t-esc="ftr_total"/></div>
+            </t>
+            <t t-if="ftr_is_last and ftr_contacts">
+                <div class="adsa-ftr-contacts">
+                    <t t-foreach="ftr_contacts" t-as="c">
+                        <div class="adsa-ftr-contact-item">
+                            <span class="ci-icon">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 2 .7 2.9a2 2 0 01-.4 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.9.6 2.9.7a2 2 0 011.6 2z"/></svg>
+                            </span>
+                            <span class="ci-name"><t t-esc="c['name']"/>:</span>
+                            <span class="ci-phone"><t t-esc="c['phone']"/></span>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </footer>
+    </template>
+
+    <!-- ══════════════════════════════════════════════════════
+         REPORTE PRINCIPAL
+         ══════════════════════════════════════════════════════ -->
+    <template id="report_sale_quote">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="total_pages" t-value="o.adsa_total_pages()"/>
+                <t t-set="module_lines" t-value="o.adsa_module_lines()"/>
+                <t t-set="contacts" t-value="o.adsa_contacts()"/>
+
+                <!-- ════════════════════════════════════
+                     PAGE 1 — PORTADA
+                     ════════════════════════════════════ -->
+                <div class="adsa-page pg-cover">
+                    <div class="cv-top-accent"></div>
+                    <div class="cv-main">
+
+                        <!-- Eyebrow -->
+                        <div class="cv-eyebrow">
+                            <div class="ew-dot"></div>
+                            <div class="ew-dot2"></div>
+                            <span>PROPUESTA COMERCIAL · ADSA · <t t-esc="o.date_order.strftime('%Y') if o.date_order else ''"/></span>
+                            <div class="ew-line"></div>
+                        </div>
+
+                        <!-- Hero title -->
+                        <h1 class="cv-h1">
+                            <t t-esc="o.adsa_cover_title or 'Propuesta comercial'"/><br/>
+                            <em><t t-esc="o.adsa_cover_accent or 'ADSA'"/></em>
+                        </h1>
+
+                        <!-- Subtitle tag -->
+                        <t t-if="o.adsa_cover_sub1">
+                            <div class="cv-tag">
+                                <div class="tg-dot"></div>
+                                <span class="cv-tag-txt"><t t-esc="o.adsa_cover_sub1"/></span>
+                            </div>
+                        </t>
+
+                        <!-- Body -->
+                        <t t-if="o.adsa_cover_sub2">
+                            <p class="cv-p3"><t t-esc="o.adsa_cover_sub2"/></p>
+                        </t>
+
+                        <!-- Proposal card -->
+                        <div class="cv-prop-card">
+                            <div class="cv-prop-card-accent"></div>
+                            <div class="cv-pc-lbl">Propuesta preparada para</div>
+                            <div class="cv-pc-nm"><t t-esc="o.partner_id.name"/></div>
+                            <div class="cv-pc-dt">
+                                <t t-call="adsa_sale_quote.icon_svg">
+                                    <t t-set="ic_name">calendar</t>
+                                    <t t-set="ic_size">15</t>
+                                </t>
+                                <t t-esc="o.date_order.strftime('Guatemala, %d de %B de %Y') if o.date_order else ''"/>
+                            </div>
+                        </div>
+
+                        <!-- Services card (order lines) -->
+                        <div class="cv-svc-card">
+                            <div class="cv-sc-hd">
+                                <div class="cv-sc-hd-dot"></div>
+                                <span class="cv-sc-hd-txt">Servicio gestionado ADSA</span>
+                            </div>
+                            <t t-foreach="o.order_line.filtered(lambda l: not l.display_type)" t-as="line">
+                                <div class="cv-sc-row">
+                                    <div class="cv-sc-ic">
+                                        <t t-call="adsa_sale_quote.icon_svg">
+                                            <t t-set="ic_name" t-value="line.product_id.product_tmpl_id.adsa_quote_icon or 'gear'"/>
+                                            <t t-set="ic_size">17</t>
+                                        </t>
+                                    </div>
+                                    <div class="cv-sc-nm"><t t-esc="line.product_id.name"/></div>
+                                    <t t-call="adsa_sale_quote.status_badge">
+                                        <t t-set="status" t-value="line.product_id.product_tmpl_id.adsa_quote_status or 'wip'"/>
+                                    </t>
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ════════════════════════════════════
+                     PAGE 2 — CONTEXTO
+                     ════════════════════════════════════ -->
+                <div class="adsa-page">
+                    <t t-call="adsa_sale_quote.page_header">
+                        <t t-set="hdr_title" t-value="o.adsa_context_title or 'Contexto actual'"/>
+                        <t t-set="hdr_sub" t-value="o.adsa_context_subtitle or ''"/>
+                        <t t-set="hdr_status" t-value="''"/>
+                    </t>
+                    <div class="ckt"></div>
+                    <div class="pc">
+                        <div class="ctx-grid">
+                            <t t-foreach="o.adsa_context_point_ids" t-as="pt">
+                                <div class="ctx-card">
+                                    <div class="ctx-card-accent"></div>
+                                    <div class="big-n"><t t-esc="pt_index + 1"/></div>
+                                    <div class="ctx-ic">
+                                        <t t-call="adsa_sale_quote.icon_svg">
+                                            <t t-set="ic_name" t-value="pt.icon or 'info'"/>
+                                            <t t-set="ic_size">17</t>
+                                        </t>
+                                    </div>
+                                    <h4><t t-esc="pt.title"/></h4>
+                                    <ul>
+                                        <t t-foreach="pt.get_items_list()" t-as="item">
+                                            <li><t t-esc="item"/></li>
+                                        </t>
+                                    </ul>
+                                    <t t-if="pt.badge">
+                                        <div class="ctx-b">
+                                            <t t-call="adsa_sale_quote.status_badge">
+                                                <t t-set="status" t-value="pt.badge"/>
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="why-card">
+                            <div class="wi">
+                                <t t-call="adsa_sale_quote.icon_svg">
+                                    <t t-set="ic_name">shield</t><t t-set="ic_size">24</t>
+                                </t>
+                            </div>
+                            <div class="wt">
+                                <h4>¿Por qué ADSA?</h4>
+                                <p><t t-esc="o.adsa_context_why or ''"/></p>
+                            </div>
+                            <div class="proof-bx">
+                                <t t-call="adsa_sale_quote.icon_svg">
+                                    <t t-set="ic_name">check</t><t t-set="ic_size">20</t><t t-set="ic_color">#22C55E</t>
+                                </t>
+                                <p><t t-esc="o.adsa_context_proof or 'Prueba de cumplimiento'"/></p>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-call="adsa_sale_quote.page_footer">
+                        <t t-set="ftr_n">2</t>
+                        <t t-set="ftr_total" t-value="total_pages"/>
+                        <t t-set="ftr_is_last" t-value="False"/>
+                        <t t-set="ftr_contacts" t-value="[]"/>
+                    </t>
+                </div>
+
+                <!-- ════════════════════════════════════
+                     PAGE 3 — SOLUCIÓN INTEGRAL
+                     ════════════════════════════════════ -->
+                <div class="adsa-page">
+                    <t t-call="adsa_sale_quote.page_header">
+                        <t t-set="hdr_title">La solución integral ADSA</t>
+                        <t t-set="hdr_sub">Tres líneas conectadas bajo un servicio gestionado</t>
+                        <t t-set="hdr_status" t-value="''"/>
+                    </t>
+                    <div class="ckt"></div>
+                    <div class="pc">
+                        <div class="sol-intro">
+                            <div class="sol-intro-main">
+                                <h2>
+                                    <t t-esc="o.adsa_solution_title or 'Una solución integral,'"/>
+                                    <br/><em><t t-esc="o.adsa_solution_accent or 'enfocada en tus necesidades'"/></em>
+                                </h2>
+                                <p><t t-esc="(o.adsa_solution_desc or '').replace('[CLIENT]', o.partner_id.name)"/></p>
+                            </div>
+                            <div class="ally-box">
+                                <div class="ai">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">shield</t><t t-set="ic_size">20</t>
+                                    </t>
+                                </div>
+                                <h5>Más que software,<br/>un aliado estratégico</h5>
+                                <p><t t-esc="o.adsa_solution_ally or ''"/></p>
+                            </div>
+                        </div>
+
+                        <!-- Tarjetas de módulos (primeras 3 líneas) -->
+                        <div class="sol-mods">
+                            <t t-set="sol_colors" t-value="['green','cyan','purple']"/>
+                            <t t-foreach="o.adsa_solution_lines()" t-as="sol_line">
+                                <t t-set="sol_tmpl" t-value="sol_line.product_id.product_tmpl_id"/>
+                                <t t-set="sol_color" t-value="sol_colors[sol_line_index] if sol_line_index &lt; 3 else 'cyan'"/>
+                                <div t-attf-class="sol-mod sol-mod-#{sol_color}">
+                                    <div class="sol-mod-img">
+                                        <div class="sol-mod-num"><t t-esc="sol_tmpl.adsa_quote_num or str(sol_line_index + 1).zfill(2)"/></div>
+                                        <div class="sol-mod-badge">
+                                            <t t-call="adsa_sale_quote.status_badge">
+                                                <t t-set="status" t-value="sol_tmpl.adsa_quote_status or 'wip'"/>
+                                            </t>
+                                        </div>
+                                        <t t-if="sol_tmpl.adsa_quote_sol_image">
+                                            <img t-att-src="image_data_uri(sol_tmpl.adsa_quote_sol_image)" alt="" style="height:140px;width:auto;object-fit:contain;position:relative;z-index:1"/>
+                                        </t>
+                                        <t t-elif="sol_tmpl.image_1920">
+                                            <img t-att-src="image_data_uri(sol_tmpl.image_1920)" alt="" style="height:140px;width:auto;object-fit:contain;position:relative;z-index:1"/>
+                                        </t>
+                                    </div>
+                                    <div class="sol-mod-body">
+                                        <h4><t t-esc="sol_line.product_id.name"/></h4>
+                                        <div class="md"><t t-esc="sol_tmpl.adsa_quote_subtitle or ''"/></div>
+                                        <ul>
+                                            <t t-foreach="sol_tmpl.adsa_quote_feature_ids" t-as="feat">
+                                                <li><t t-esc="feat.name"/></li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                        <!-- Odoo bar -->
+                        <div class="odoo-bar">
+                            <div class="ob-txt">
+                                <div class="ob-pill ob-pill-cyan">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">link</t><t t-set="ic_size">12</t><t t-set="ic_color">#22D3EE</t>
+                                    </t>
+                                    <span>Plataforma unificada</span>
+                                </div>
+                                <h5>Todo en una misma plataforma</h5>
+                                <p>Procesos conectados, información centralizada y operación más eficiente.</p>
+                            </div>
+                            <div class="ob-dia">
+                                <img src="/adsa_sale_quote/static/src/img/sol-odoo.png" alt="Odoo" style="height:120px"/>
+                            </div>
+                            <div class="ob-gro">
+                                <div class="ob-pill ob-pill-purple">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">rocket</t><t t-set="ic_size">12</t><t t-set="ic_color">#A78BFA</t>
+                                    </t>
+                                    <span>Escalabilidad</span>
+                                </div>
+                                <h5>Listo para crecer contigo</h5>
+                                <p>Una base sólida para nuevas necesidades y proyectos futuros.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-call="adsa_sale_quote.page_footer">
+                        <t t-set="ftr_n">3</t>
+                        <t t-set="ftr_total" t-value="total_pages"/>
+                        <t t-set="ftr_is_last" t-value="False"/>
+                        <t t-set="ftr_contacts" t-value="[]"/>
+                    </t>
+                </div>
+
+                <!-- ════════════════════════════════════
+                     PÁGINAS DE MÓDULOS (dinámicas)
+                     ════════════════════════════════════ -->
+                <t t-foreach="module_lines" t-as="mod_line">
+                    <t t-set="mod" t-value="mod_line.product_id.product_tmpl_id"/>
+                    <t t-set="mod_n" t-value="4 + mod_line_index"/>
+
+                    <!-- Layout A -->
+                    <t t-if="mod.adsa_quote_layout == 'A'">
+                        <div class="adsa-page">
+                            <t t-call="adsa_sale_quote.page_header">
+                                <t t-set="hdr_title" t-value="mod_line.product_id.name"/>
+                                <t t-set="hdr_sub" t-value="mod.adsa_quote_header_sub or ''"/>
+                                <t t-set="hdr_status" t-value="''"/>
+                            </t>
+                            <div class="ckt"></div>
+                            <div class="pc">
+                                <div class="ma-state">
+                                    <div class="ms-ic">
+                                        <t t-call="adsa_sale_quote.icon_svg">
+                                            <t t-set="ic_name">check</t><t t-set="ic_size">26</t>
+                                        </t>
+                                    </div>
+                                    <div>
+                                        <h4><t t-esc="mod.adsa_quote_state_title or 'Estado actual'"/></h4>
+                                        <p><t t-esc="(mod.adsa_quote_state_text or '').replace('[CLIENT]', o.partner_id.name)"/></p>
+                                    </div>
+                                </div>
+                                <div class="ma-cols">
+                                    <t t-foreach="mod.adsa_quote_col_ids" t-as="col">
+                                        <div class="ma-col">
+                                            <div class="ma-col-top"></div>
+                                            <div class="mc-ic">
+                                                <t t-call="adsa_sale_quote.icon_svg">
+                                                    <t t-set="ic_name" t-value="col.icon or 'check'"/>
+                                                    <t t-set="ic_size">15</t>
+                                                </t>
+                                            </div>
+                                            <h5><t t-esc="col.title"/></h5>
+                                            <t t-if="col.items">
+                                                <ul>
+                                                    <t t-foreach="col.get_items_list()" t-as="item">
+                                                        <li><t t-esc="item"/></li>
+                                                    </t>
+                                                </ul>
+                                            </t>
+                                            <t t-else="">
+                                                <p><t t-esc="col.text_content or ''"/></p>
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                                <t t-if="mod.adsa_quote_note">
+                                    <div class="ma-note">
+                                        <t t-call="adsa_sale_quote.icon_svg">
+                                            <t t-set="ic_name">mobile</t><t t-set="ic_size">18</t><t t-set="ic_color">#2563EB</t>
+                                        </t>
+                                        <p><t t-esc="mod.adsa_quote_note"/></p>
+                                    </div>
+                                </t>
+                            </div>
+                            <t t-call="adsa_sale_quote.page_footer">
+                                <t t-set="ftr_n" t-value="mod_n"/>
+                                <t t-set="ftr_total" t-value="total_pages"/>
+                                <t t-set="ftr_is_last" t-value="False"/>
+                                <t t-set="ftr_contacts" t-value="[]"/>
+                            </t>
+                        </div>
+                    </t>
+
+                    <!-- Layout B -->
+                    <t t-if="mod.adsa_quote_layout == 'B'">
+                        <div class="adsa-page">
+                            <t t-call="adsa_sale_quote.page_header">
+                                <t t-set="hdr_title" t-value="mod_line.product_id.name"/>
+                                <t t-set="hdr_sub" t-value="mod.adsa_quote_header_sub or ''"/>
+                                <t t-set="hdr_status" t-value="''"/>
+                            </t>
+                            <div class="ckt"></div>
+                            <div class="pc">
+                                <div class="mb-grid">
+                                    <div class="mb-blk">
+                                        <div class="mb-blk-top"></div>
+                                        <h4>
+                                            <span class="ic24">
+                                                <t t-call="adsa_sale_quote.icon_svg">
+                                                    <t t-set="ic_name">puzzle</t><t t-set="ic_size">12</t>
+                                                </t>
+                                            </span>
+                                            Alcance funcional
+                                        </h4>
+                                        <ul>
+                                            <t t-foreach="mod.get_scope_list()" t-as="item">
+                                                <li><t t-esc="item"/></li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                    <div class="mb-blk">
+                                        <div class="mb-blk-top"></div>
+                                        <h4>
+                                            <span class="ic24">
+                                                <t t-call="adsa_sale_quote.icon_svg">
+                                                    <t t-set="ic_name">link</t><t t-set="ic_size">12</t>
+                                                </t>
+                                            </span>
+                                            Puente de valor
+                                        </h4>
+                                        <div class="br-cards">
+                                            <div class="br-card">
+                                                <span class="bl">Qué reemplaza</span>
+                                                <p><t t-esc="mod.adsa_quote_bridge_replaces or ''"/></p>
+                                            </div>
+                                            <div class="br-card">
+                                                <span class="bl">Qué evita</span>
+                                                <p><t t-esc="mod.adsa_quote_bridge_eliminates or ''"/></p>
+                                            </div>
+                                            <div class="br-card">
+                                                <span class="bl">Qué controla</span>
+                                                <p><t t-esc="mod.adsa_quote_bridge_controls or ''"/></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-blk">
+                                        <div class="mb-blk-top"></div>
+                                        <h4>
+                                            <span class="ic24">
+                                                <t t-call="adsa_sale_quote.icon_svg">
+                                                    <t t-set="ic_name">users</t><t t-set="ic_size">12</t>
+                                                </t>
+                                            </span>
+                                            Reglas operativas
+                                        </h4>
+                                        <ul>
+                                            <t t-foreach="mod.get_rules_list()" t-as="item">
+                                                <li><t t-esc="item"/></li>
+                                            </t>
+                                        </ul>
+                                    </div>
+                                    <div class="mb-blk">
+                                        <div class="mb-blk-top"></div>
+                                        <h4>
+                                            <span class="ic24">
+                                                <t t-call="adsa_sale_quote.icon_svg">
+                                                    <t t-set="ic_name">link</t><t t-set="ic_size">12</t>
+                                                </t>
+                                            </span>
+                                            Integración con SAP
+                                        </h4>
+                                        <p style="font-size:10.5px;color:var(--t2);line-height:1.6">
+                                            <t t-esc="mod.adsa_quote_sap_note or ''"/>
+                                        </p>
+                                        <div class="sap-note">
+                                            <t t-call="adsa_sale_quote.icon_svg">
+                                                <t t-set="ic_name">link</t><t t-set="ic_size">14</t><t t-set="ic_color">#F59E0B</t>
+                                            </t>
+                                            <span>Addon importación SAP → Odoo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <t t-call="adsa_sale_quote.page_footer">
+                                <t t-set="ftr_n" t-value="mod_n"/>
+                                <t t-set="ftr_total" t-value="total_pages"/>
+                                <t t-set="ftr_is_last" t-value="False"/>
+                                <t t-set="ftr_contacts" t-value="[]"/>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+
+                <!-- ════════════════════════════════════
+                     PÁGINA PERFILES (variable)
+                     ════════════════════════════════════ -->
+                <t t-set="profiles_n" t-value="4 + len(module_lines)"/>
+                <div class="adsa-page">
+                    <t t-call="adsa_sale_quote.page_header">
+                        <t t-set="hdr_title" t-value="o.adsa_profiles_title or 'Perfiles y alcance operativo'"/>
+                        <t t-set="hdr_sub" t-value="o.adsa_profiles_subtitle or ''"/>
+                        <t t-set="hdr_status" t-value="''"/>
+                    </t>
+                    <div class="ckt"></div>
+                    <div class="pc">
+                        <t t-foreach="module_lines" t-as="prof_line">
+                            <t t-set="prof_tmpl" t-value="prof_line.product_id.product_tmpl_id"/>
+                            <t t-if="prof_tmpl.adsa_quote_profile_ids">
+                                <div class="prof-sec">
+                                    <h4>
+                                        <span class="pic">
+                                            <t t-call="adsa_sale_quote.icon_svg">
+                                                <t t-set="ic_name" t-value="prof_tmpl.adsa_quote_icon or 'gear'"/>
+                                                <t t-set="ic_size">13</t>
+                                            </t>
+                                        </span>
+                                        <t t-esc="prof_line.product_id.name"/>
+                                    </h4>
+                                    <div class="ptbl-wrap">
+                                        <table class="ptbl">
+                                            <thead>
+                                                <tr>
+                                                    <th>Perfil</th>
+                                                    <th>Funciones principales</th>
+                                                    <th>Acceso</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="prof_tmpl.adsa_quote_profile_ids" t-as="prof">
+                                                    <tr>
+                                                        <td style="font-weight:600;color:var(--t1)"><t t-esc="prof.profile_name"/></td>
+                                                        <td><t t-esc="prof.functions"/></td>
+                                                        <td>
+                                                            <t t-if="prof.access == 'Completo'"><span class="a-ok"><t t-esc="prof.access"/></span></t>
+                                                            <t t-elif="prof.access == 'Intermedio'"><span class="a-mid"><t t-esc="prof.access"/></span></t>
+                                                            <t t-else=""><span class="a-lim"><t t-esc="prof.access"/></span></t>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <div class="cm-box">
+                            <h4>
+                                <t t-call="adsa_sale_quote.icon_svg">
+                                    <t t-set="ic_name">dollar</t><t t-set="ic_size">16</t><t t-set="ic_color">#22D3EE</t>
+                                </t>
+                                &#160;Modelo de dimensionamiento comercial
+                            </h4>
+                            <p><t t-esc="o.adsa_profiles_model or ''"/></p>
+                        </div>
+                    </div>
+                    <t t-call="adsa_sale_quote.page_footer">
+                        <t t-set="ftr_n" t-value="profiles_n"/>
+                        <t t-set="ftr_total" t-value="total_pages"/>
+                        <t t-set="ftr_is_last" t-value="False"/>
+                        <t t-set="ftr_contacts" t-value="[]"/>
+                    </t>
+                </div>
+
+                <!-- ════════════════════════════════════
+                     PÁGINA ECONÓMICA
+                     ════════════════════════════════════ -->
+                <t t-set="economic_n" t-value="profiles_n + 1"/>
+                <div class="adsa-page">
+                    <t t-call="adsa_sale_quote.page_header">
+                        <t t-set="hdr_title" t-value="o.adsa_economic_title or 'Resumen económico'"/>
+                        <t t-set="hdr_sub" t-value="o.adsa_economic_subtitle or 'Servicio gestionado con valor operativo'"/>
+                        <t t-set="hdr_status" t-value="''"/>
+                    </t>
+                    <div class="ckt"></div>
+                    <div class="pc">
+                        <div class="ec-intro">
+                            <t t-call="adsa_sale_quote.icon_svg">
+                                <t t-set="ic_name">dollar</t><t t-set="ic_size">18</t><t t-set="ic_color">#22D3EE</t>
+                            </t>
+                            <p><t t-esc="o.adsa_economic_intro or ''"/></p>
+                        </div>
+                        <div class="etbl-wrap">
+                            <table class="etbl">
+                                <thead>
+                                    <tr>
+                                        <th>Servicio / Módulo</th>
+                                        <th>Estado</th>
+                                        <th>Valor mensual</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="module_lines" t-as="ec_line">
+                                        <t t-set="ec_tmpl" t-value="ec_line.product_id.product_tmpl_id"/>
+                                        <tr>
+                                            <td>
+                                                <div class="sn"><t t-esc="ec_line.product_id.name"/></div>
+                                                <t t-foreach="ec_tmpl.get_monthly_notes()" t-as="note">
+                                                    <div class="snt"><t t-esc="note"/></div>
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <t t-call="adsa_sale_quote.status_badge">
+                                                    <t t-set="status" t-value="ec_tmpl.adsa_quote_status or 'wip'"/>
+                                                </t>
+                                            </td>
+                                            <td class="amt"><t t-esc="ec_tmpl.adsa_quote_monthly_amount or 'Q0.00 / mes'"/></td>
+                                        </tr>
+                                    </t>
+                                    <tr class="etbl-total">
+                                        <td colspan="2" style="font-family:var(--fh);font-size:13px;font-weight:700;color:#FFFFFF">Total servicio gestionado</td>
+                                        <td class="amt"><t t-esc="'Q{:,.2f} / mes'.format(o.amount_total) if not o.adsa_onetime_amount else ''"/>
+                                            <!-- fallback: suma de líneas mensuales se muestra si no hay campo propio -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <t t-if="o.adsa_onetime_name">
+                            <div class="ot-card">
+                                <div class="ot-card-top"></div>
+                                <div class="oi">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">gear</t><t t-set="ic_size">20</t><t t-set="ic_color">#F59E0B</t>
+                                    </t>
+                                </div>
+                                <div>
+                                    <h5><t t-esc="o.adsa_onetime_name"/></h5>
+                                    <p><t t-esc="o.adsa_onetime_desc or ''"/></p>
+                                </div>
+                                <div class="oa"><t t-esc="o.adsa_onetime_amount or ''"/></div>
+                            </div>
+                        </t>
+                        <t t-if="o.adsa_economic_note">
+                            <div class="ec-note">
+                                <t t-call="adsa_sale_quote.icon_svg">
+                                    <t t-set="ic_name">info</t><t t-set="ic_size">16</t><t t-set="ic_color">#2563EB</t>
+                                </t>
+                                <p><t t-esc="o.adsa_economic_note"/></p>
+                            </div>
+                        </t>
+                    </div>
+                    <t t-call="adsa_sale_quote.page_footer">
+                        <t t-set="ftr_n" t-value="economic_n"/>
+                        <t t-set="ftr_total" t-value="total_pages"/>
+                        <t t-set="ftr_is_last" t-value="False"/>
+                        <t t-set="ftr_contacts" t-value="[]"/>
+                    </t>
+                </div>
+
+                <!-- ════════════════════════════════════
+                     PÁGINA DE CIERRE (última)
+                     ════════════════════════════════════ -->
+                <t t-set="closure_n" t-value="economic_n + 1"/>
+                <div class="adsa-page">
+                    <t t-call="adsa_sale_quote.page_header">
+                        <t t-set="hdr_title" t-value="o.adsa_closure_title or 'Cierre y próximos pasos'"/>
+                        <t t-set="hdr_sub" t-value="o.adsa_closure_subtitle or 'Ruta clara para activar la siguiente fase'"/>
+                        <t t-set="hdr_status" t-value="''"/>
+                    </t>
+                    <div class="ckt"></div>
+                    <div class="pc">
+                        <!-- Timeline -->
+                        <div class="sh" style="margin-bottom:12px">
+                            <div class="sh-icon">
+                                <t t-call="adsa_sale_quote.icon_svg">
+                                    <t t-set="ic_name">rocket</t><t t-set="ic_size">16</t>
+                                </t>
+                            </div>
+                            <span class="sh-label">Cronograma estimado de implementación</span>
+                            <div class="sh-line"></div>
+                        </div>
+                        <div class="tl" style="margin-bottom:18px">
+                            <t t-foreach="o.adsa_timeline_ids" t-as="step">
+                                <div class="tl-step">
+                                    <div class="tc"><t t-esc="step.sequence"/></div>
+                                    <h5><t t-esc="step.title"/></h5>
+                                    <p><t t-esc="step.description or ''"/></p>
+                                </div>
+                            </t>
+                        </div>
+
+                        <div class="cl-cols">
+                            <!-- Próximos pasos -->
+                            <div class="ns-card">
+                                <div class="ns-card-top"></div>
+                                <h5>Próximos pasos</h5>
+                                <ul>
+                                    <t t-foreach="o.adsa_next_steps_list()" t-as="ns">
+                                        <li>
+                                            <span class="sn"><t t-esc="ns_index + 1"/></span>
+                                            <t t-esc="ns"/>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
+                            <!-- Vigencia -->
+                            <div class="val-card">
+                                <div class="val-card-top"></div>
+                                <h5>Vigencia de la oferta</h5>
+                                <p><t t-esc="o.adsa_validity_text or ''"/></p>
+                                <div class="val-dt">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">calendar</t><t t-set="ic_size">14</t><t t-set="ic_color">#38BDF8</t>
+                                    </t>
+                                    <t t-esc="o.date_order.strftime('Guatemala, %d de %B de %Y') if o.date_order else ''"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensaje de cierre -->
+                        <div class="cl-msg">
+                            <t t-call="adsa_sale_quote.icon_svg">
+                                <t t-set="ic_name">hand</t><t t-set="ic_size">28</t><t t-set="ic_color">#22D3EE</t>
+                            </t>
+                            <p><t t-esc="o.adsa_closure_message or ''"/></p>
+                        </div>
+
+                        <!-- Firmas -->
+                        <div class="acc">
+                            <div class="acc-box">
+                                <div class="acc-box-top"></div>
+                                <h5>Aceptación del cliente</h5>
+                                <div class="sig-l"></div>
+                                <div class="sig-lb">Nombre y firma del cliente</div>
+                                <div style="margin-top:10px">
+                                    <div class="sig-l"></div>
+                                    <div class="sig-lb">Fecha</div>
+                                </div>
+                            </div>
+                            <div class="acc-box">
+                                <div class="acc-box-top"></div>
+                                <h5>Representante ADSA</h5>
+                                <div class="sig-l">
+                                    <div class="sig-v"><t t-esc="o.user_id.name"/></div>
+                                </div>
+                                <div class="sig-lb">Nombre y firma</div>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-call="adsa_sale_quote.page_footer">
+                        <t t-set="ftr_n" t-value="closure_n"/>
+                        <t t-set="ftr_total" t-value="total_pages"/>
+                        <t t-set="ftr_is_last" t-value="True"/>
+                        <t t-set="ftr_contacts" t-value="contacts"/>
+                    </t>
+                </div>
+
+            </t>
+        </t>
+    </template>
+
+</odoo>

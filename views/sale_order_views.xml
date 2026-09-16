@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_form_adsa" model="ir.ui.view">
+        <field name="name">sale.order.form.adsa.quote</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <notebook position="inside">
+                <page string="Propuesta ADSA Premium" name="adsa_quote">
+
+                    <!-- PORTADA -->
+                    <group string="Portada" col="2">
+                        <field name="adsa_cover_title" placeholder="Propuesta comercial"/>
+                        <field name="adsa_cover_accent" placeholder="ADSA"/>
+                        <field name="adsa_cover_sub1" placeholder="Subtítulo (tag de portada)"/>
+                        <field name="adsa_cover_sub2" placeholder="Descripción de portada"/>
+                    </group>
+
+                    <!-- CONTEXTO -->
+                    <group string="Contexto (Página 2)" col="2">
+                        <field name="adsa_context_title" placeholder="Contexto actual y avance comprobado"/>
+                        <field name="adsa_context_subtitle" placeholder="Base ya entregada y oportunidad"/>
+                        <field name="adsa_context_proof" placeholder="Prueba de cumplimiento"/>
+                    </group>
+                    <field name="adsa_context_why" placeholder="¿Por qué ADSA? — texto del párrafo"/>
+                    <field name="adsa_context_point_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="title"/>
+                            <field name="icon"/>
+                            <field name="badge"/>
+                            <field name="items" placeholder="Un ítem por línea"/>
+                        </list>
+                    </field>
+
+                    <!-- SOLUCIÓN -->
+                    <group string="Solución integral (Página 3)" col="2">
+                        <field name="adsa_solution_title" placeholder="Una solución integral,"/>
+                        <field name="adsa_solution_accent" placeholder="enfocada en tus necesidades"/>
+                    </group>
+                    <field name="adsa_solution_desc" placeholder="Descripción de la solución — use [CLIENT] para insertar el nombre del cliente"/>
+                    <field name="adsa_solution_ally" placeholder="Texto aliado estratégico"/>
+
+                    <!-- PERFILES -->
+                    <group string="Perfiles (Página dinámica)" col="2">
+                        <field name="adsa_profiles_title" placeholder="Perfiles y alcance operativo"/>
+                        <field name="adsa_profiles_subtitle" placeholder="Perfiles de referencia por línea de servicio"/>
+                    </group>
+                    <field name="adsa_profiles_model" placeholder="Modelo de dimensionamiento comercial"/>
+
+                    <!-- ECONÓMICO -->
+                    <group string="Económico (Página dinámica)" col="2">
+                        <field name="adsa_economic_title" placeholder="Resumen económico"/>
+                        <field name="adsa_economic_subtitle" placeholder="Servicio gestionado con valor operativo"/>
+                    </group>
+                    <field name="adsa_economic_intro" placeholder="Descripción introductoria del resumen económico"/>
+                    <group col="2">
+                        <field name="adsa_onetime_name" placeholder="Nombre del pago único (ej. Implementación)"/>
+                        <field name="adsa_onetime_amount" placeholder="Q1,300.00"/>
+                    </group>
+                    <field name="adsa_onetime_desc" placeholder="Descripción del pago único"/>
+                    <field name="adsa_economic_note" placeholder="Nota al pie de la tabla económica"/>
+
+                    <!-- CIERRE -->
+                    <group string="Cierre (Última página)" col="2">
+                        <field name="adsa_closure_title" placeholder="Cierre y próximos pasos"/>
+                        <field name="adsa_closure_subtitle" placeholder="Ruta clara para activar la siguiente fase"/>
+                    </group>
+                    <field name="adsa_timeline_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="title"/>
+                            <field name="description"/>
+                        </list>
+                    </field>
+                    <field name="adsa_next_steps" placeholder="Un paso por línea"/>
+                    <group col="2">
+                        <field name="adsa_validity_text" placeholder="15 días calendario a partir de la fecha de emisión."/>
+                    </group>
+                    <field name="adsa_closure_message" placeholder="Mensaje final de cierre y confianza"/>
+
+                    <!-- CONTACTOS EN FOOTER ÚLTIMA PÁGINA -->
+                    <group string="Contactos en pie de última página" col="2">
+                        <field name="adsa_contact1_name" placeholder="Nombre Contacto 1"/>
+                        <field name="adsa_contact1_phone" placeholder="Teléfono Contacto 1"/>
+                        <field name="adsa_contact2_name" placeholder="Nombre Contacto 2"/>
+                        <field name="adsa_contact2_phone" placeholder="Teléfono Contacto 2"/>
+                    </group>
+
+                </page>
+            </notebook>
+
+        </field>
+    </record>
+
+</odoo>

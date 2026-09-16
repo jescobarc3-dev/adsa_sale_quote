@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_adsa" model="ir.ui.view">
+        <field name="name">product.template.form.adsa.quote</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <notebook position="inside">
+                <page string="Propuesta ADSA" name="adsa_quote">
+
+                    <!-- Identificación general -->
+                    <group string="Identificación en propuesta" col="2">
+                        <field name="adsa_quote_status"/>
+                        <field name="adsa_quote_icon"/>
+                        <field name="adsa_quote_num" placeholder="01"/>
+                        <field name="adsa_quote_layout" placeholder="Vacío = no genera página de módulo"/>
+                    </group>
+
+                    <!-- Página de solución (p3) -->
+                    <group string="Página de solución (p3)">
+                        <field name="adsa_quote_subtitle" placeholder="Descripción corta bajo el nombre en la tarjeta de solución"/>
+                        <field name="adsa_quote_sol_image" widget="image" options="{'size': [200, 200]}"/>
+                    </group>
+                    <field name="adsa_quote_feature_ids" string="Características (página solución)">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                        </list>
+                    </field>
+
+                    <!-- Header de página de módulo -->
+                    <group string="Header de página de módulo" col="2" attrs="{'invisible': [('adsa_quote_layout','=',False)]}">
+                        <field name="adsa_quote_header_sub" placeholder="Subtítulo del header (ej. Fase actual de implementación)"/>
+                    </group>
+
+                    <!-- Layout A -->
+                    <group string="Layout A — Estado + 3 columnas" attrs="{'invisible': [('adsa_quote_layout','!=','A')]}">
+                        <group col="1">
+                            <field name="adsa_quote_state_title" placeholder="Estado actual"/>
+                            <field name="adsa_quote_state_text" placeholder="Descripción del estado — use [CLIENT] para nombre del cliente"/>
+                            <field name="adsa_quote_note" placeholder="Nota al pie de la página de módulo"/>
+                        </group>
+                    </group>
+                    <field name="adsa_quote_col_ids" string="Columnas del módulo (Layout A)" attrs="{'invisible': [('adsa_quote_layout','!=','A')]}">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="title"/>
+                            <field name="icon"/>
+                            <field name="items" placeholder="Un ítem por línea (si es lista)"/>
+                            <field name="text_content" placeholder="Párrafo (si no es lista)"/>
+                        </list>
+                    </field>
+
+                    <!-- Layout B -->
+                    <group string="Layout B — Grid 2×2" attrs="{'invisible': [('adsa_quote_layout','!=','B')]}">
+                        <field name="adsa_quote_scope_items" placeholder="Alcance funcional — un ítem por línea"/>
+                        <field name="adsa_quote_rules_items" placeholder="Reglas operativas — un ítem por línea"/>
+                        <group col="1" string="Puente de valor">
+                            <field name="adsa_quote_bridge_replaces" placeholder="Qué reemplaza"/>
+                            <field name="adsa_quote_bridge_eliminates" placeholder="Qué evita"/>
+                            <field name="adsa_quote_bridge_controls" placeholder="Qué controla"/>
+                        </group>
+                        <field name="adsa_quote_sap_note" placeholder="Nota de integración SAP"/>
+                    </group>
+
+                    <!-- Perfiles -->
+                    <group string="Perfiles de usuario (página de perfiles)">
+                    </group>
+                    <field name="adsa_quote_profile_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="profile_name"/>
+                            <field name="functions"/>
+                            <field name="access"/>
+                        </list>
+                    </field>
+
+                    <!-- Económico -->
+                    <group string="Datos económicos (página económica)" col="2">
+                        <field name="adsa_quote_monthly_amount" placeholder="Q0.00 / mes"/>
+                        <field name="adsa_quote_monthly_notes" placeholder="Una nota por línea"/>
+                    </group>
+
+                </page>
+            </notebook>
+
+        </field>
+    </record>
+
+</odoo>
