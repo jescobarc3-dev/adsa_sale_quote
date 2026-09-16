@@ -212,6 +212,13 @@
                             </t>
                         </div>
 
+                        <!-- Número de cotización para seguimiento -->
+                        <div class="cv-ref">
+                            <div class="cv-ref-dot"></div>
+                            <span class="cv-ref-label">Ref.</span>
+                            <span class="cv-ref-num"><t t-esc="o.name"/></span>
+                        </div>
+
                     </div>
                 </div>
 
