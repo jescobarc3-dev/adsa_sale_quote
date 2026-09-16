@@ -95,4 +95,20 @@
         </field>
     </record>
 
+    <!-- Botón Imprimir Propuesta en el header del formulario -->
+    <record id="view_sale_order_form_adsa_button" model="ir.ui.view">
+        <field name="name">sale.order.form.adsa.quote.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[last()]" position="after">
+                <button name="action_print_adsa_quote"
+                        type="object"
+                        string="Propuesta Comercial ADSA"
+                        icon="fa-print"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

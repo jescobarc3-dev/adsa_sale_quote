@@ -80,3 +80,6 @@ class SaleOrder(models.Model):
         if self.adsa_contact2_name and self.adsa_contact2_phone:
             contacts.append({'name': self.adsa_contact2_name, 'phone': self.adsa_contact2_phone})
         return contacts
+
+    def action_print_adsa_quote(self):
+        return self.env.ref('adsa_sale_quote.action_report_adsa_sale_quote').report_action(self)
