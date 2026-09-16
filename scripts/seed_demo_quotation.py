@@ -425,7 +425,7 @@ for seq, (title, desc) in enumerate(timeline, start=10):
 # ══════════════════════════════════════════════════════════════════════════════
 # 6. RESULTADO
 # ══════════════════════════════════════════════════════════════════════════════
-order_data = call('sale.order', 'read', [order_id], {'fields': ['name']})[0]
+order_data = call('sale.order', 'read', [order_id], fields=['name'])[0]
 print(f'\n✅ Cotización creada: {order_data["name"]} (id={order_id})')
 print(f'\nAbre en Odoo:')
 print(f'  {URL}/odoo/sales/{order_id}')
