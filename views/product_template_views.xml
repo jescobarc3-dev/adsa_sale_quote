@@ -31,19 +31,19 @@
                     </field>
 
                     <!-- Header de página de módulo -->
-                    <group string="Header de página de módulo" col="2" attrs="{'invisible': [('adsa_quote_layout','=',False)]}">
+                    <group string="Header de página de módulo" col="2" invisible="not adsa_quote_layout">
                         <field name="adsa_quote_header_sub" placeholder="Subtítulo del header (ej. Fase actual de implementación)"/>
                     </group>
 
                     <!-- Layout A -->
-                    <group string="Layout A — Estado + 3 columnas" attrs="{'invisible': [('adsa_quote_layout','!=','A')]}">
+                    <group string="Layout A — Estado + 3 columnas" invisible="adsa_quote_layout != 'A'">
                         <group col="1">
                             <field name="adsa_quote_state_title" placeholder="Estado actual"/>
                             <field name="adsa_quote_state_text" placeholder="Descripción del estado — use [CLIENT] para nombre del cliente"/>
                             <field name="adsa_quote_note" placeholder="Nota al pie de la página de módulo"/>
                         </group>
                     </group>
-                    <field name="adsa_quote_col_ids" string="Columnas del módulo (Layout A)" attrs="{'invisible': [('adsa_quote_layout','!=','A')]}">
+                    <field name="adsa_quote_col_ids" string="Columnas del módulo (Layout A)" invisible="adsa_quote_layout != 'A'">
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="title"/>
@@ -54,7 +54,7 @@
                     </field>
 
                     <!-- Layout B -->
-                    <group string="Layout B — Grid 2×2" attrs="{'invisible': [('adsa_quote_layout','!=','B')]}">
+                    <group string="Layout B — Grid 2×2" invisible="adsa_quote_layout != 'B'">
                         <field name="adsa_quote_scope_items" placeholder="Alcance funcional — un ítem por línea"/>
                         <field name="adsa_quote_rules_items" placeholder="Reglas operativas — un ítem por línea"/>
                         <group col="1" string="Puente de valor">
