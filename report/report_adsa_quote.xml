@@ -646,7 +646,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="module_lines" t-as="ec_line">
+                                    <t t-foreach="o.adsa_solution_lines()" t-as="ec_line">
                                         <t t-set="ec_tmpl" t-value="ec_line.product_id.product_tmpl_id"/>
                                         <tr>
                                             <td>
