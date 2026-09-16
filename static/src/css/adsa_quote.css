@@ -40,7 +40,9 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
   background: var(--bg);
   overflow: hidden;
   page-break-after: always;
+  break-after: page;
   page-break-inside: avoid;
+  break-inside: avoid;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -48,9 +50,17 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
   flex-direction: column;
 }
 
+@media screen {
+  body { background: #e8eaf0; padding: 20px 0; }
+  .adsa-page {
+    margin: 0 auto 32px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+  }
+}
+
 @media print {
   @page { size: 8.5in 11in; margin: 0; }
-  body { margin: 0; }
+  body { margin: 0; background: #fff; padding: 0; }
 }
 
 /* CIRCUIT OVERLAY */
@@ -404,18 +414,18 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
   background: #fff;
   box-shadow: 0 4px 24px rgba(6,182,212,0.10);
 }
-.sol-mod-green { border: 1px solid rgba(34,197,94,0.35); }
-.sol-mod-cyan  { border: 1px solid rgba(6,182,212,0.35); }
-.sol-mod-purple{ border: 1px solid rgba(139,92,246,0.35); }
+.sol-mod-green { border: 1px solid rgba(34,197,94,0.35);  border-top: 4px solid #22C55E; }
+.sol-mod-cyan  { border: 1px solid rgba(6,182,212,0.35);  border-top: 4px solid #06B6D4; }
+.sol-mod-purple{ border: 1px solid rgba(139,92,246,0.35); border-top: 4px solid #8B5CF6; }
 
 .sol-mod-img {
   position: relative; width: 100%; height: 200px; overflow: hidden;
   display: -webkit-box; display: flex; align-items: center; justify-content: center;
   padding-top: 22px; padding-bottom: 8px;
 }
-.sol-mod-green .sol-mod-img { background: linear-gradient(160deg, rgba(34,197,94,0.12) 0%, #f0f8fc 50%, #ffffff 100%); border-bottom: 2px solid rgba(34,197,94,0.25); }
-.sol-mod-cyan  .sol-mod-img { background: linear-gradient(160deg, rgba(6,182,212,0.12) 0%, #f0f8fc 50%, #ffffff 100%); border-bottom: 2px solid rgba(6,182,212,0.25); }
-.sol-mod-purple.sol-mod-img { background: linear-gradient(160deg, rgba(139,92,246,0.12) 0%, #f0f8fc 50%, #ffffff 100%); border-bottom: 2px solid rgba(139,92,246,0.25); }
+.sol-mod-green .sol-mod-img  { background: linear-gradient(160deg, rgba(34,197,94,0.20) 0%, #f0fff5 50%, #ffffff 100%); border-bottom: 2px solid rgba(34,197,94,0.30); }
+.sol-mod-cyan  .sol-mod-img  { background: linear-gradient(160deg, rgba(6,182,212,0.20) 0%, #f0f8fc 50%, #ffffff 100%); border-bottom: 2px solid rgba(6,182,212,0.30); }
+.sol-mod-purple .sol-mod-img { background: linear-gradient(160deg, rgba(139,92,246,0.20) 0%, #f5f0ff 50%, #ffffff 100%); border-bottom: 2px solid rgba(139,92,246,0.30); }
 
 .sol-mod-img img { position: relative; z-index: 1; height: 140px; width: auto; object-fit: contain; }
 
