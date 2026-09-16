@@ -44,6 +44,7 @@ class AdsaQuoteTimelineStep(models.Model):
     sequence = fields.Integer(default=10)
     title = fields.Char(required=True)
     description = fields.Char()
+    is_current = fields.Boolean(string='Paso actual', default=False)
 
 
 class AdsaQuoteModuleCol(models.Model):

@@ -728,7 +728,10 @@
                         </div>
                         <div class="tl" style="margin-bottom:18px">
                             <t t-foreach="o.adsa_timeline_ids" t-as="step">
-                                <div class="tl-step">
+                                <t t-if="not step_first">
+                                    <div class="tl-conn"><div class="tl-conn-line"></div></div>
+                                </t>
+                                <div t-attf-class="tl-step#{' tl-step-current' if step.is_current else ''}">
                                     <div class="tc"><t t-esc="step.sequence"/></div>
                                     <h5><t t-esc="step.title"/></h5>
                                     <p><t t-esc="step.description or ''"/></p>

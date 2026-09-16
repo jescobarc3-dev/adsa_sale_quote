@@ -73,6 +73,7 @@
                             <field name="sequence" widget="handle"/>
                             <field name="title"/>
                             <field name="description"/>
+                            <field name="is_current" string="Actual"/>
                         </list>
                     </field>
                     <field name="adsa_next_steps" placeholder="Un paso por línea"/>
