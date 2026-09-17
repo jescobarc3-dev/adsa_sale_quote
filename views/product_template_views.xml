@@ -53,6 +53,19 @@
                         </list>
                     </field>
 
+                    <!-- Layout C -->
+                    <group string="Layout C — Features (imagen + título + descripción + nota)" invisible="adsa_quote_layout != 'C'">
+                    </group>
+                    <field name="adsa_quote_module_feature_ids" string="[C] Features" invisible="adsa_quote_layout != 'C'">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="title"/>
+                            <field name="description"/>
+                            <field name="image" widget="image" options="{'size': [80, 60]}"/>
+                            <field name="note" placeholder="Nota opcional al pie del card"/>
+                        </list>
+                    </field>
+
                     <!-- Layout B -->
                     <group string="Layout B — Grid 2×2" invisible="adsa_quote_layout != 'B'">
                         <field name="adsa_quote_scope_items" placeholder="Alcance funcional — un ítem por línea"/>

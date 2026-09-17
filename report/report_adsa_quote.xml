@@ -558,6 +558,43 @@
                             </t>
                         </div>
                     </t>
+
+                    <!-- Layout C — Feature showcase -->
+                    <t t-if="mod.adsa_quote_layout == 'C'">
+                        <div class="adsa-page">
+                            <t t-call="adsa_sale_quote.page_header">
+                                <t t-set="hdr_title" t-value="mod_line.product_id.name"/>
+                                <t t-set="hdr_sub" t-value="mod.adsa_quote_header_sub or ''"/>
+                                <t t-set="hdr_status" t-value="''"/>
+                            </t>
+                            <div class="ckt"></div>
+                            <div class="pc">
+                                <t t-foreach="mod.adsa_quote_module_feature_ids" t-as="feat">
+                                    <div class="mc-feat">
+                                        <div class="mc-feat-img">
+                                            <t t-if="feat.image">
+                                                <img t-attf-src="data:image/png;base64,#{feat.image.decode()}" alt=""/>
+                                            </t>
+                                        </div>
+                                        <div class="mc-feat-body">
+                                            <div class="mc-feat-tag">NUEVO FEATURE</div>
+                                            <div class="mc-feat-title"><t t-esc="feat.title"/></div>
+                                            <div class="mc-feat-desc"><t t-esc="feat.description or ''"/></div>
+                                            <t t-if="feat.note">
+                                                <div class="mc-feat-note"><t t-esc="feat.note"/></div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                            <t t-call="adsa_sale_quote.page_footer">
+                                <t t-set="ftr_n" t-value="mod_n"/>
+                                <t t-set="ftr_total" t-value="total_pages"/>
+                                <t t-set="ftr_is_last" t-value="False"/>
+                                <t t-set="ftr_contacts" t-value="[]"/>
+                            </t>
+                        </div>
+                    </t>
                 </t>
 
                 <!-- ════════════════════════════════════

@@ -95,3 +95,16 @@ class AdsaQuoteFeature(models.Model):
     product_tmpl_id = fields.Many2one('product.template', required=True, ondelete='cascade')
     sequence = fields.Integer(default=10)
     name = fields.Char(required=True)
+
+
+class AdsaQuoteModuleFeature(models.Model):
+    _name = 'adsa.quote.module.feature'
+    _description = 'Feature highlight Layout C'
+    _order = 'sequence, id'
+
+    product_tmpl_id = fields.Many2one('product.template', required=True, ondelete='cascade')
+    sequence = fields.Integer(default=10)
+    title = fields.Char(string='Título', required=True)
+    description = fields.Text(string='Descripción')
+    image = fields.Image(string='Imagen', max_width=800, max_height=600)
+    note = fields.Char(string='Nota / etiqueta inferior')

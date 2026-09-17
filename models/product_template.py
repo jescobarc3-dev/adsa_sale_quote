@@ -14,6 +14,7 @@ class ProductTemplate(models.Model):
     adsa_quote_layout = fields.Selection([
         ('A', 'Layout A — Estado + 3 columnas'),
         ('B', 'Layout B — Grid 2×2'),
+        ('C', 'Layout C — Feature showcase (imagen + texto)'),
     ], string='Layout de página de módulo', help='Si está vacío, el producto no genera página de módulo.')
 
     adsa_quote_icon = fields.Selection([
@@ -50,6 +51,10 @@ class ProductTemplate(models.Model):
     adsa_quote_col_ids = fields.One2many(
         'adsa.quote.module.col', 'product_tmpl_id', string='[A] Columnas de módulo')
     adsa_quote_note = fields.Char(string='[A] Nota inferior')
+
+    # Layout C
+    adsa_quote_module_feature_ids = fields.One2many(
+        'adsa.quote.module.feature', 'product_tmpl_id', string='[C] Features')
 
     # Layout B
     adsa_quote_scope_items = fields.Text(string='[B] Alcance funcional', help='Un ítem por línea')

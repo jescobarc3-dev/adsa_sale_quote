@@ -4,3 +4,4 @@ access_adsa_timeline_step,adsa.quote.timeline.step,model_adsa_quote_timeline_ste
 access_adsa_module_col,adsa.quote.module.col,model_adsa_quote_module_col,base.group_user,1,1,1,1
 access_adsa_profile,adsa.quote.profile,model_adsa_quote_profile,base.group_user,1,1,1,1
 access_adsa_feature,adsa.quote.feature,model_adsa_quote_feature,base.group_user,1,1,1,1
+access_adsa_module_feature,adsa.quote.module.feature,model_adsa_quote_module_feature,base.group_user,1,1,1,1
