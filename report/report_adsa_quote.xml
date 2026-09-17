@@ -598,7 +598,6 @@
                                 <t t-set="hdr_title" t-value="mod_line.product_id.name"/>
                                 <t t-set="hdr_sub" t-value="mod.adsa_quote_header_sub or ''"/>
                                 <t t-set="hdr_status" t-value="''"/>
-                                <t t-set="hdr_sec" t-value="'%02d' % (3 + mod_line_index)"/>
                             </t>
                             <div class="ckt"></div>
                             <div class="pc">
