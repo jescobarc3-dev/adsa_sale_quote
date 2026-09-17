@@ -48,7 +48,9 @@
                         <field name="adsa_profiles_title" placeholder="Perfiles y alcance operativo"/>
                         <field name="adsa_profiles_subtitle" placeholder="Perfiles de referencia por línea de servicio"/>
                     </group>
-                    <field name="adsa_profiles_model" placeholder="Nota de dimensionamiento (aparece bajo la tabla)"/>
+                    <group col="1">
+                        <field name="adsa_profiles_model" placeholder="Nota de dimensionamiento (aparece bajo la tabla)" colspan="1"/>
+                    </group>
                     <field name="adsa_profiles_capacity_ids" string="Tabla de capacidad base por módulo">
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
