@@ -850,7 +850,7 @@
                         <t t-set="hdr_sec" t-value="'%02d' % (5 + len(module_lines))"/>
                     </t>
                     <div class="ckt"></div>
-                    <div class="pc">
+                    <div class="pc" style="padding-bottom:340px">
                         <!-- Timeline -->
                         <div class="sh" style="margin-bottom:12px">
                             <div class="sh-icon">
