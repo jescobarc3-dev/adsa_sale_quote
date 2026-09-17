@@ -701,22 +701,6 @@
                                 <div class="oa"><t t-esc="'Q{:,.2f}'.format(ot_line.price_unit * ot_line.product_uom_qty)"/></div>
                             </div>
                         </t>
-                        <!-- Fallback: campo manual legacy si no hay líneas onetime -->
-                        <t t-if="o.adsa_onetime_name and not o.adsa_onetime_lines()">
-                            <div class="ot-card">
-                                <div class="ot-card-top"></div>
-                                <div class="oi">
-                                    <t t-call="adsa_sale_quote.icon_svg">
-                                        <t t-set="ic_name">gear</t><t t-set="ic_size">20</t><t t-set="ic_color">#F59E0B</t>
-                                    </t>
-                                </div>
-                                <div>
-                                    <h5><t t-esc="o.adsa_onetime_name"/></h5>
-                                    <p><t t-esc="o.adsa_onetime_desc or ''"/></p>
-                                </div>
-                                <div class="oa"><t t-esc="o.adsa_onetime_amount or ''"/></div>
-                            </div>
-                        </t>
                         <t t-if="o.adsa_economic_note">
                             <div class="ec-note">
                                 <t t-call="adsa_sale_quote.icon_svg">

@@ -34,9 +34,6 @@ class SaleOrder(models.Model):
     adsa_economic_title = fields.Char(string='Título económico', default='Resumen económico')
     adsa_economic_subtitle = fields.Char(string='Subtítulo económico', default='Servicio gestionado con valor operativo')
     adsa_economic_intro = fields.Text(string='Intro económico')
-    adsa_onetime_name = fields.Char(string='Nombre pago único')
-    adsa_onetime_desc = fields.Text(string='Descripción pago único')
-    adsa_onetime_amount = fields.Char(string='Monto pago único')
     adsa_economic_note = fields.Text(string='Nota económica')
 
     # ── CIERRE ────────────────────────────────────────────────────────────────

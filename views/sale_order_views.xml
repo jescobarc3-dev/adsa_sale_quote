@@ -56,11 +56,6 @@
                         <field name="adsa_economic_subtitle" placeholder="Servicio gestionado con valor operativo"/>
                     </group>
                     <field name="adsa_economic_intro" placeholder="Descripción introductoria del resumen económico"/>
-                    <group col="2">
-                        <field name="adsa_onetime_name" placeholder="Nombre del pago único (ej. Implementación)"/>
-                        <field name="adsa_onetime_amount" placeholder="Q1,300.00"/>
-                    </group>
-                    <field name="adsa_onetime_desc" placeholder="Descripción del pago único"/>
                     <field name="adsa_economic_note" placeholder="Nota al pie de la tabla económica"/>
 
                     <!-- CIERRE -->
