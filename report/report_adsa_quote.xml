@@ -918,27 +918,27 @@
                             </t>
                             <p><t t-esc="o.adsa_closure_message or ''"/></p>
                         </div>
+                    </div>
 
-                        <!-- Firmas -->
-                        <div class="acc">
-                            <div class="acc-box">
-                                <div class="acc-box-top"></div>
-                                <h5>Aceptación del cliente</h5>
+                    <!-- Firmas — posición absoluta sobre el footer -->
+                    <div class="acc">
+                        <div class="acc-box">
+                            <div class="acc-box-top"></div>
+                            <h5>Aceptación del cliente</h5>
+                            <div class="sig-l"></div>
+                            <div class="sig-lb">Nombre y firma del cliente</div>
+                            <div style="margin-top:10px">
                                 <div class="sig-l"></div>
-                                <div class="sig-lb">Nombre y firma del cliente</div>
-                                <div style="margin-top:10px">
-                                    <div class="sig-l"></div>
-                                    <div class="sig-lb">Fecha</div>
-                                </div>
+                                <div class="sig-lb">Fecha</div>
                             </div>
-                            <div class="acc-box">
-                                <div class="acc-box-top"></div>
-                                <h5>Representante ADSA</h5>
-                                <div class="sig-l">
-                                    <div class="sig-v"><t t-esc="o.user_id.name"/></div>
-                                </div>
-                                <div class="sig-lb">Nombre y firma</div>
+                        </div>
+                        <div class="acc-box">
+                            <div class="acc-box-top"></div>
+                            <h5>Representante ADSA</h5>
+                            <div class="sig-l">
+                                <div class="sig-v"><t t-esc="o.user_id.name"/></div>
                             </div>
+                            <div class="sig-lb">Nombre y firma</div>
                         </div>
                     </div>
                     <t t-call="adsa_sale_quote.page_footer">
