@@ -44,6 +44,7 @@ class AdsaQuoteTimelineStep(models.Model):
     sequence = fields.Integer(default=10)
     title = fields.Char(required=True)
     description = fields.Char()
+    date_label = fields.Char(string='Fecha / Período', help='Ej: Oct 2025, Semana 3, Q1 2026')
     step_status = fields.Selection([
         ('done', 'Ejecutado'),
         ('current', 'En curso'),

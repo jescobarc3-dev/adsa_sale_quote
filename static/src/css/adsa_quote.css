@@ -886,6 +886,9 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
 .tl-step-pending h5 { color: rgba(255,255,255,0.35); }
 .tl-step-pending p  { color: rgba(148,163,184,0.35); }
 .tl-step h5 { font-family: var(--fh); font-size: 13px; font-weight: 700; color: #FFFFFF; line-height: 1.3; }
+.tl-date { font-family: var(--fh); font-size: 10px; font-weight: 600; color: #22D3EE; letter-spacing: 0.4px; }
+.tl-step-pending .tl-date { color: rgba(148,163,184,0.4); }
+.tl-step-done .tl-date    { color: rgba(34,197,94,0.6); }
 .tl-step p  { font-size: 11px; color: rgba(148,163,184,0.85); line-height: 1.4; }
 /* Conectores según estado del paso anterior */
 .tl-conn-done .tl-conn-line    { background: linear-gradient(90deg, #22C55E, #22D3EE); box-shadow: 0 0 6px rgba(34,197,94,0.3); }

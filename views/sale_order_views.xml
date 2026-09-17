@@ -86,6 +86,7 @@
                             <field name="sequence" widget="handle"/>
                             <field name="title"/>
                             <field name="description"/>
+                            <field name="date_label" placeholder="Oct 2025"/>
                             <field name="step_status"/>
                         </list>
                     </field>
