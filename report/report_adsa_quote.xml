@@ -672,14 +672,13 @@
                                                     <t t-set="status" t-value="ec_tmpl.adsa_quote_status or 'wip'"/>
                                                 </t>
                                             </td>
-                                            <td class="amt"><t t-esc="ec_tmpl.adsa_quote_monthly_amount or 'Q0.00 / mes'"/></td>
+                                            <td class="amt"><t t-esc="'Q{:,.2f} / mes'.format(ec_line.price_unit)"/></td>
                                         </tr>
                                     </t>
                                     <tr class="etbl-total">
+                                        <t t-set="ec_total" t-value="sum(l.price_unit * l.product_uom_qty for l in o.adsa_solution_lines())"/>
                                         <td colspan="2" style="font-family:var(--fh);font-size:13px;font-weight:700;color:#FFFFFF">Total servicio gestionado</td>
-                                        <td class="amt"><t t-esc="'Q{:,.2f} / mes'.format(o.amount_total) if not o.adsa_onetime_amount else ''"/>
-                                            <!-- fallback: suma de líneas mensuales se muestra si no hay campo propio -->
-                                        </td>
+                                        <td class="amt"><t t-esc="'Q{:,.2f} / mes'.format(ec_total)"/></td>
                                     </tr>
                                 </tbody>
                             </table>
