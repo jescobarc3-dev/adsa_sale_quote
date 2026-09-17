@@ -79,8 +79,8 @@
 
                     <!-- Económico -->
                     <group string="Datos económicos (página económica)" col="2">
-                        <field name="adsa_quote_monthly_amount" placeholder="Q0.00 / mes"/>
-                        <field name="adsa_quote_monthly_notes" placeholder="Una nota por línea"/>
+                        <field name="adsa_quote_billing_type"/>
+                        <field name="adsa_quote_monthly_notes" placeholder="Una nota por línea (aparece bajo el precio en la tabla)"/>
                     </group>
 
                 </page>

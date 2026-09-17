@@ -654,12 +654,13 @@
                                     <tr>
                                         <th>Servicio / Módulo</th>
                                         <th>Estado</th>
-                                        <th>Valor mensual</th>
+                                        <th>Valor</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <t t-foreach="o.adsa_solution_lines()" t-as="ec_line">
+                                    <t t-foreach="o.adsa_recurring_lines()" t-as="ec_line">
                                         <t t-set="ec_tmpl" t-value="ec_line.product_id.product_tmpl_id"/>
+                                        <t t-set="ec_suffix" t-value="'/ año' if ec_tmpl.adsa_quote_billing_type == 'annual' else '/ mes'"/>
                                         <tr>
                                             <td>
                                                 <div class="sn"><t t-esc="ec_line.product_id.name"/></div>
@@ -672,18 +673,36 @@
                                                     <t t-set="status" t-value="ec_tmpl.adsa_quote_status or 'wip'"/>
                                                 </t>
                                             </td>
-                                            <td class="amt"><t t-esc="'Q{:,.2f} / mes'.format(ec_line.price_unit)"/></td>
+                                            <td class="amt"><t t-esc="'Q{:,.2f} '.format(ec_line.price_unit)"/><span style="font-size:10px;opacity:0.7"><t t-esc="ec_suffix"/></span></td>
                                         </tr>
                                     </t>
                                     <tr class="etbl-total">
-                                        <t t-set="ec_total" t-value="sum(l.price_unit * l.product_uom_qty for l in o.adsa_solution_lines())"/>
+                                        <t t-set="ec_total" t-value="sum(l.price_unit * l.product_uom_qty for l in o.adsa_recurring_lines())"/>
                                         <td colspan="2" style="font-family:var(--fh);font-size:13px;font-weight:700;color:#FFFFFF">Total servicio gestionado</td>
-                                        <td class="amt"><t t-esc="'Q{:,.2f} / mes'.format(ec_total)"/></td>
+                                        <td class="amt"><t t-esc="'Q{:,.2f}'.format(ec_total)"/></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <t t-if="o.adsa_onetime_name">
+                        <!-- Cards de pago único / implementación — vienen de líneas con billing_type=onetime -->
+                        <t t-foreach="o.adsa_onetime_lines()" t-as="ot_line">
+                            <div class="ot-card">
+                                <div class="ot-card-top"></div>
+                                <div class="oi">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name" t-value="ot_line.product_id.product_tmpl_id.adsa_quote_icon or 'gear'"/>
+                                        <t t-set="ic_size">20</t><t t-set="ic_color">#F59E0B</t>
+                                    </t>
+                                </div>
+                                <div>
+                                    <h5><t t-esc="ot_line.product_id.name"/></h5>
+                                    <p><t t-esc="ot_line.product_id.description_sale or ''"/></p>
+                                </div>
+                                <div class="oa"><t t-esc="'Q{:,.2f}'.format(ot_line.price_unit * ot_line.product_uom_qty)"/></div>
+                            </div>
+                        </t>
+                        <!-- Fallback: campo manual legacy si no hay líneas onetime -->
+                        <t t-if="o.adsa_onetime_name and not o.adsa_onetime_lines()">
                             <div class="ot-card">
                                 <div class="ot-card-top"></div>
                                 <div class="oi">

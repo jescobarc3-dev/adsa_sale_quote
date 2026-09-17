@@ -61,10 +61,23 @@ class SaleOrder(models.Model):
             and l.product_id.product_tmpl_id.adsa_quote_layout
         )
 
+    def adsa_recurring_lines(self):
+        """Todas las líneas de servicio recurrente (mensual o anual) — tabla económica."""
+        return self.order_line.filtered(
+            lambda l: not l.display_type
+            and l.product_id.product_tmpl_id.adsa_quote_billing_type in ('monthly', 'annual', False)
+        )
+
     def adsa_solution_lines(self):
-        """Las primeras 3 líneas con producto (para página de solución)."""
-        lines = self.order_line.filtered(lambda l: not l.display_type)
-        return lines[:3]
+        """Las primeras 3 líneas recurrentes (para página de solución p3)."""
+        return self.adsa_recurring_lines()[:3]
+
+    def adsa_onetime_lines(self):
+        """Líneas de pago único/implementación — card naranja en página económica."""
+        return self.order_line.filtered(
+            lambda l: not l.display_type
+            and l.product_id.product_tmpl_id.adsa_quote_billing_type == 'onetime'
+        )
 
     def adsa_next_steps_list(self):
         return [s.strip() for s in (self.adsa_next_steps or '').splitlines() if s.strip()]

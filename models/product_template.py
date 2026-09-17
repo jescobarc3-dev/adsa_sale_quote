@@ -64,8 +64,13 @@ class ProductTemplate(models.Model):
         'adsa.quote.profile', 'product_tmpl_id', string='Perfiles de usuario')
 
     # Página económica
-    adsa_quote_monthly_amount = fields.Char(string='Monto mensual', default='Q0.00 / mes')
-    adsa_quote_monthly_notes = fields.Text(string='Notas adicionales del monto', help='Una nota por línea')
+    adsa_quote_billing_type = fields.Selection([
+        ('monthly', 'Mensual (/ mes)'),
+        ('annual', 'Anual (/ año)'),
+        ('onetime', 'Pago único — Implementación'),
+    ], string='Tipo de facturación ADSA', default='monthly',
+       help='Mensual/Anual → aparece en tabla de servicios recurrentes. Pago único → aparece como card de implementación.')
+    adsa_quote_monthly_notes = fields.Text(string='Notas del servicio (económica)', help='Una nota por línea')
 
     def get_scope_list(self):
         return [i.strip() for i in (self.adsa_quote_scope_items or '').splitlines() if i.strip()]
