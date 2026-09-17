@@ -59,10 +59,10 @@ class SaleOrder(models.Model):
         )
 
     def adsa_recurring_lines(self):
-        """Todas las líneas de servicio recurrente (mensual o anual) — tabla económica."""
+        """Todas las líneas que NO son pago único — tabla económica y página de solución."""
         return self.order_line.filtered(
             lambda l: not l.display_type
-            and l.product_id.product_tmpl_id.adsa_quote_billing_type in ('monthly', 'annual', False)
+            and l.product_id.product_tmpl_id.adsa_quote_billing_type != 'onetime'
         )
 
     def adsa_solution_lines(self):
