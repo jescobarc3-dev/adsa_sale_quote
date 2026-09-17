@@ -170,6 +170,14 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
   position: absolute; right: 18px;
   top: 50%; transform: translateY(-50%);
 }
+.adsa-hdr-sec {
+  position: absolute;
+  left: 18px; bottom: 11px;
+  font-family: var(--fh); font-size: 10px; font-weight: 700;
+  color: #22D3EE; letter-spacing: 0.8px;
+  border: 1px solid rgba(34,211,238,0.35); border-radius: 4px;
+  padding: 2px 7px; background: rgba(34,211,238,0.08);
+}
 
 /* STANDARD FOOTER */
 .adsa-ftr {
