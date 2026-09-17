@@ -97,6 +97,18 @@ class AdsaQuoteFeature(models.Model):
     name = fields.Char(required=True)
 
 
+class AdsaQuoteCapacityRow(models.Model):
+    _name = 'adsa.quote.capacity.row'
+    _description = 'Fila de tabla de capacidad base por módulo'
+    _order = 'sequence, id'
+
+    order_id = fields.Many2one('sale.order', required=True, ondelete='cascade')
+    sequence = fields.Integer(default=10)
+    module_name = fields.Char(string='Módulo', required=True)
+    base_users = fields.Char(string='Usuarios base incluidos')
+    extra_cost = fields.Char(string='Costo usuario adicional')
+
+
 class AdsaQuoteModuleFeature(models.Model):
     _name = 'adsa.quote.module.feature'
     _description = 'Feature highlight Layout C'

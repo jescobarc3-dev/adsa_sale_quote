@@ -48,7 +48,15 @@
                         <field name="adsa_profiles_title" placeholder="Perfiles y alcance operativo"/>
                         <field name="adsa_profiles_subtitle" placeholder="Perfiles de referencia por línea de servicio"/>
                     </group>
-                    <field name="adsa_profiles_model" placeholder="Modelo de dimensionamiento comercial"/>
+                    <field name="adsa_profiles_model" placeholder="Nota de dimensionamiento (aparece bajo la tabla)"/>
+                    <field name="adsa_profiles_capacity_ids" string="Tabla de capacidad base por módulo">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="module_name" placeholder="Inventario + Flotillas"/>
+                            <field name="base_users" placeholder="5 usuarios incluidos"/>
+                            <field name="extra_cost" placeholder="Q100 / usuario adicional"/>
+                        </list>
+                    </field>
 
                     <!-- ECONÓMICO -->
                     <group string="Económico (Página dinámica)" col="2">

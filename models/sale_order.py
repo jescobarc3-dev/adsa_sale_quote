@@ -29,6 +29,8 @@ class SaleOrder(models.Model):
     adsa_profiles_subtitle = fields.Char(string='Subtítulo perfiles', default='Perfiles de referencia por línea de servicio')
     adsa_profiles_model = fields.Text(string='Modelo de dimensionamiento',
         default='La propuesta se define como un servicio gestionado integral con capacidad base incluida por módulo.')
+    adsa_profiles_capacity_ids = fields.One2many(
+        'adsa.quote.capacity.row', 'order_id', string='Tabla de capacidad base')
 
     # ── ECONÓMICO ─────────────────────────────────────────────────────────────
     adsa_economic_title = fields.Char(string='Título económico', default='Resumen económico')
