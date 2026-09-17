@@ -62,10 +62,10 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
 .adsa-pdf-btn:hover { background: #06B6D4; }
 
 @media screen {
-  body { background: #e8eaf0; padding: 20px 0; }
+  body { background: #808080; margin: 0; padding: 0; }
   .adsa-page {
-    margin: 0 auto 32px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+    margin: 0 auto 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
   }
   .adsa-pdf-btn { display: block; }
 }
