@@ -406,7 +406,7 @@
                                 <t t-set="hdr_status" t-value="''"/>
                             </t>
                             <div class="ckt"></div>
-                            <div class="pc">
+                            <div class="pc" style="display:-webkit-box;display:flex;-webkit-box-orient:vertical;flex-direction:column">
                                 <div class="ma-state">
                                     <div class="ms-ic">
                                         <t t-call="adsa_sale_quote.icon_svg">
