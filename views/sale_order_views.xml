@@ -23,9 +23,9 @@
                         <field name="adsa_context_title" placeholder="Contexto actual y avance comprobado"/>
                         <field name="adsa_context_subtitle" placeholder="Base ya entregada y oportunidad"/>
                         <field name="adsa_context_proof" placeholder="Prueba de cumplimiento"/>
+                        <field name="adsa_context_why" placeholder="¿Por qué ADSA? — texto del párrafo" colspan="2"/>
                     </group>
-                    <field name="adsa_context_why" placeholder="¿Por qué ADSA? — texto del párrafo"/>
-                    <field name="adsa_context_point_ids">
+                    <field name="adsa_context_point_ids" string="Puntos de contexto (tarjetas)">
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="title"/>
