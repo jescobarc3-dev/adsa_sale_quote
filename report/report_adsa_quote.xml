@@ -96,9 +96,6 @@
     <!-- Header estándar -->
     <template id="page_header">
         <header class="adsa-hdr">
-            <t t-if="hdr_sec">
-                <div class="adsa-hdr-sec"><t t-esc="hdr_sec"/></div>
-            </t>
             <div class="adsa-hdr-txt">
                 <h2 t-esc="hdr_title"/>
                 <p t-esc="hdr_sub"/>
@@ -111,6 +108,9 @@
                 </div>
             </t>
         </header>
+        <t t-if="hdr_sec">
+            <div class="adsa-page-sec"><t t-esc="hdr_sec"/></div>
+        </t>
     </template>
 
     <!-- Footer estándar (con paginación) -->
