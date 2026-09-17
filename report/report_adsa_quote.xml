@@ -455,15 +455,18 @@
                                     <div class="ma-features">
                                         <t t-foreach="mod.adsa_quote_module_feature_ids" t-as="feat">
                                             <div class="mc-feat">
-                                                <div class="mc-feat-img">
-                                                    <t t-if="feat.image">
-                                                        <img t-attf-src="data:image/png;base64,#{feat.image.decode()}" alt=""/>
-                                                    </t>
-                                                </div>
+                                                <!-- Texto arriba: tag + título + descripción -->
                                                 <div class="mc-feat-body">
                                                     <div class="mc-feat-tag">NUEVO FEATURE</div>
                                                     <div class="mc-feat-title"><t t-esc="feat.title"/></div>
                                                     <div class="mc-feat-desc"><t t-esc="feat.description or ''"/></div>
+                                                </div>
+                                                <!-- Imagen crece para llenar el espacio restante -->
+                                                <div class="mc-feat-img">
+                                                    <t t-if="feat.image">
+                                                        <img t-attf-src="data:image/png;base64,#{feat.image.decode()}" alt=""/>
+                                                    </t>
+                                                    <!-- Nota superpuesta al fondo de la imagen -->
                                                     <t t-if="feat.note">
                                                         <div class="mc-feat-note"><t t-esc="feat.note"/></div>
                                                     </t>
@@ -593,15 +596,15 @@
                             <div class="pc">
                                 <t t-foreach="mod.adsa_quote_module_feature_ids" t-as="feat">
                                     <div class="mc-feat">
-                                        <div class="mc-feat-img">
-                                            <t t-if="feat.image">
-                                                <img t-attf-src="data:image/png;base64,#{feat.image.decode()}" alt=""/>
-                                            </t>
-                                        </div>
                                         <div class="mc-feat-body">
                                             <div class="mc-feat-tag">NUEVO FEATURE</div>
                                             <div class="mc-feat-title"><t t-esc="feat.title"/></div>
                                             <div class="mc-feat-desc"><t t-esc="feat.description or ''"/></div>
+                                        </div>
+                                        <div class="mc-feat-img">
+                                            <t t-if="feat.image">
+                                                <img t-attf-src="data:image/png;base64,#{feat.image.decode()}" alt=""/>
+                                            </t>
                                             <t t-if="feat.note">
                                                 <div class="mc-feat-note"><t t-esc="feat.note"/></div>
                                             </t>
