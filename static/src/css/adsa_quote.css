@@ -941,7 +941,7 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
 
 .acc {
   position: absolute;
-  bottom: 158px; left: 28px; right: 28px;
+  bottom: 95px; left: 28px; right: 28px;
   z-index: 5;
   display: -webkit-box; display: flex; gap: 13px;
 }
