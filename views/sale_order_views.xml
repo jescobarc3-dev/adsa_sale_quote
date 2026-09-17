@@ -40,8 +40,12 @@
                         <field name="adsa_solution_title" placeholder="Una solución integral,"/>
                         <field name="adsa_solution_accent" placeholder="enfocada en tus necesidades"/>
                     </group>
-                    <field name="adsa_solution_desc" placeholder="Descripción de la solución — use [CLIENT] para insertar el nombre del cliente"/>
-                    <field name="adsa_solution_ally" placeholder="Texto aliado estratégico"/>
+                    <group col="1">
+                        <field name="adsa_solution_desc" placeholder="Descripción de la solución — use [CLIENT] para insertar el nombre del cliente"/>
+                    </group>
+                    <group col="1">
+                        <field name="adsa_solution_ally" placeholder="Texto aliado estratégico"/>
+                    </group>
 
                     <!-- PERFILES -->
                     <group string="Perfiles (Página dinámica)" col="2">
@@ -49,7 +53,7 @@
                         <field name="adsa_profiles_subtitle" placeholder="Perfiles de referencia por línea de servicio"/>
                     </group>
                     <group col="1">
-                        <field name="adsa_profiles_model" placeholder="Nota de dimensionamiento (aparece bajo la tabla)" colspan="1"/>
+                        <field name="adsa_profiles_model" placeholder="Nota de dimensionamiento (aparece bajo la tabla)"/>
                     </group>
                     <field name="adsa_profiles_capacity_ids" string="Tabla de capacidad base por módulo">
                         <list editable="bottom">
@@ -65,8 +69,12 @@
                         <field name="adsa_economic_title" placeholder="Resumen económico"/>
                         <field name="adsa_economic_subtitle" placeholder="Servicio gestionado con valor operativo"/>
                     </group>
-                    <field name="adsa_economic_intro" placeholder="Descripción introductoria del resumen económico"/>
-                    <field name="adsa_economic_note" placeholder="Nota al pie de la tabla económica"/>
+                    <group col="1">
+                        <field name="adsa_economic_intro" placeholder="Descripción introductoria del resumen económico"/>
+                    </group>
+                    <group col="1">
+                        <field name="adsa_economic_note" placeholder="Nota al pie de la tabla económica"/>
+                    </group>
 
                     <!-- CIERRE -->
                     <group string="Cierre (Última página)" col="2">
@@ -81,11 +89,15 @@
                             <field name="is_current" string="Actual"/>
                         </list>
                     </field>
-                    <field name="adsa_next_steps" placeholder="Un paso por línea"/>
+                    <group col="1">
+                        <field name="adsa_next_steps" placeholder="Un paso por línea"/>
+                    </group>
                     <group col="2">
                         <field name="adsa_validity_text" placeholder="15 días calendario a partir de la fecha de emisión."/>
                     </group>
-                    <field name="adsa_closure_message" placeholder="Mensaje final de cierre y confianza"/>
+                    <group col="1">
+                        <field name="adsa_closure_message" placeholder="Mensaje final de cierre y confianza"/>
+                    </group>
 
                     <!-- CONTACTOS EN FOOTER ÚLTIMA PÁGINA -->
                     <group string="Contactos en pie de última página" col="2">
