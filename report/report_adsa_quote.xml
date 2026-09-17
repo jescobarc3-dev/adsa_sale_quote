@@ -97,7 +97,7 @@
     <template id="page_header">
         <header class="adsa-hdr">
             <t t-if="hdr_sec">
-                <div class="adsa-hdr-sec">§ <t t-esc="hdr_sec"/></div>
+                <div class="adsa-hdr-sec"><t t-esc="hdr_sec"/></div>
             </t>
             <div class="adsa-hdr-txt">
                 <h2 t-esc="hdr_title"/>
@@ -463,7 +463,7 @@
                                             <div class="mc-feat">
                                                 <!-- Texto arriba: tag + título + descripción -->
                                                 <div class="mc-feat-body">
-                                                    <div class="mc-feat-tag">§ <t t-esc="'%02d' % (3 + mod_line_index)"/>.<t t-esc="feat_index + 1"/></div>
+                                                    <div class="mc-feat-tag"><t t-esc="'%02d' % (3 + mod_line_index)"/>.<t t-esc="feat_index + 1"/></div>
                                                     <div class="mc-feat-title"><t t-esc="feat.title"/></div>
                                                     <div class="mc-feat-desc"><t t-esc="feat.description or ''"/></div>
                                                 </div>
@@ -605,7 +605,7 @@
                                 <t t-foreach="mod.adsa_quote_module_feature_ids" t-as="feat">
                                     <div class="mc-feat">
                                         <div class="mc-feat-body">
-                                            <div class="mc-feat-tag">§ <t t-esc="'%02d' % (3 + mod_line_index)"/>.<t t-esc="feat_index + 1"/></div>
+                                            <div class="mc-feat-tag"><t t-esc="'%02d' % (3 + mod_line_index)"/>.<t t-esc="feat_index + 1"/></div>
                                             <div class="mc-feat-title"><t t-esc="feat.title"/></div>
                                             <div class="mc-feat-desc"><t t-esc="feat.description or ''"/></div>
                                         </div>
