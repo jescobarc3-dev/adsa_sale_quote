@@ -559,8 +559,8 @@
                         </div>
                     </t>
 
-                    <!-- Layout C — Feature showcase -->
-                    <t t-if="mod.adsa_quote_layout == 'C'">
+                    <!-- Página de features adicional (independiente del layout A/B) -->
+                    <t t-if="mod.adsa_quote_module_feature_ids">
                         <div class="adsa-page">
                             <t t-call="adsa_sale_quote.page_header">
                                 <t t-set="hdr_title" t-value="mod_line.product_id.name"/>

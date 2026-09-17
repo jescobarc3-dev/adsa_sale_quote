@@ -14,8 +14,7 @@ class ProductTemplate(models.Model):
     adsa_quote_layout = fields.Selection([
         ('A', 'Layout A — Estado + 3 columnas'),
         ('B', 'Layout B — Grid 2×2'),
-        ('C', 'Layout C — Feature showcase (imagen + texto)'),
-    ], string='Layout de página de módulo', help='Si está vacío, el producto no genera página de módulo.')
+    ], string='Layout de página de módulo', help='Si está vacío, el producto no genera página principal de módulo.')
 
     adsa_quote_icon = fields.Selection([
         ('ticket', 'Ticket'),

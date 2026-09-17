@@ -53,10 +53,10 @@
                         </list>
                     </field>
 
-                    <!-- Layout C -->
-                    <group string="Layout C — Features (imagen + título + descripción + nota)" invisible="adsa_quote_layout != 'C'">
+                    <!-- Features adicionales (página independiente, combina con cualquier layout) -->
+                    <group string="Página de features adicional (se agrega después del layout principal si hay items)">
                     </group>
-                    <field name="adsa_quote_module_feature_ids" string="[C] Features" invisible="adsa_quote_layout != 'C'">
+                    <field name="adsa_quote_module_feature_ids" string="Features (imagen + título + descripción + nota)">
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="title"/>
