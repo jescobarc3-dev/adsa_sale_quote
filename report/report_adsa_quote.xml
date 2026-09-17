@@ -682,37 +682,50 @@
                                 </div>
                             </t>
                         </t>
-                        <div class="cm-box">
-                            <h4>
-                                <t t-call="adsa_sale_quote.icon_svg">
-                                    <t t-set="ic_name">dollar</t><t t-set="ic_size">16</t><t t-set="ic_color">#22D3EE</t>
-                                </t>
-                                &#160;Modelo de dimensionamiento comercial
-                            </h4>
-                            <t t-if="o.adsa_profiles_capacity_ids">
-                                <table class="cap-tbl">
-                                    <thead>
-                                        <tr>
-                                            <th>Módulo</th>
-                                            <th>Usuarios base incluidos</th>
-                                            <th>Costo usuario adicional</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <t t-foreach="o.adsa_profiles_capacity_ids" t-as="cap">
+                        <t t-if="o.adsa_profiles_capacity_ids">
+                            <div class="cap-sec">
+                                <h4 class="cap-sec-h">
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">dollar</t><t t-set="ic_size">14</t><t t-set="ic_color">#16A0A5</t>
+                                    </t>
+                                    &#160;Modelo de dimensionamiento comercial
+                                </h4>
+                                <div class="ptbl-wrap">
+                                    <table class="ptbl">
+                                        <thead>
                                             <tr>
-                                                <td style="font-weight:600;color:#0B3A67"><t t-esc="cap.module_name"/></td>
-                                                <td><t t-esc="cap.base_users or '—'"/></td>
-                                                <td style="color:#16A0A5;font-weight:600"><t t-esc="cap.extra_cost or '—'"/></td>
+                                                <th>Módulo</th>
+                                                <th>Usuarios base incluidos</th>
+                                                <th>Costo usuario adicional</th>
                                             </tr>
-                                        </t>
-                                    </tbody>
-                                </table>
-                            </t>
-                            <t t-if="o.adsa_profiles_model">
-                                <p class="cm-note"><t t-esc="o.adsa_profiles_model"/></p>
-                            </t>
-                        </div>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.adsa_profiles_capacity_ids" t-as="cap">
+                                                <tr>
+                                                    <td style="font-weight:700;color:var(--t1)"><t t-esc="cap.module_name"/></td>
+                                                    <td><t t-esc="cap.base_users or '—'"/></td>
+                                                    <td class="a-ok"><t t-esc="cap.extra_cost or '—'"/></td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <t t-if="o.adsa_profiles_model">
+                                    <p class="cap-note"><t t-esc="o.adsa_profiles_model"/></p>
+                                </t>
+                            </div>
+                        </t>
+                        <t t-if="not o.adsa_profiles_capacity_ids">
+                            <div class="cm-box">
+                                <h4>
+                                    <t t-call="adsa_sale_quote.icon_svg">
+                                        <t t-set="ic_name">dollar</t><t t-set="ic_size">16</t><t t-set="ic_color">#22D3EE</t>
+                                    </t>
+                                    &#160;Modelo de dimensionamiento comercial
+                                </h4>
+                                <p><t t-esc="o.adsa_profiles_model or ''"/></p>
+                            </div>
+                        </t>
                     </div>
                     <t t-call="adsa_sale_quote.page_footer">
                         <t t-set="ftr_n" t-value="profiles_n"/>
