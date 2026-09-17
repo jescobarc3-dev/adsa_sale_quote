@@ -409,7 +409,7 @@
                                 <t t-set="hdr_title" t-value="mod_line.product_id.name"/>
                                 <t t-set="hdr_sub" t-value="mod.adsa_quote_header_sub or ''"/>
                                 <t t-set="hdr_status" t-value="''"/>
-                                <t t-set="hdr_sec" t-value="'%d' % (3 + mod_line_index)"/>
+                                <t t-set="hdr_sec" t-value="'%02d' % (3 + mod_line_index)"/>
                             </t>
                             <div class="ckt"></div>
                             <div class="pc" style="display:-webkit-box;display:flex;-webkit-box-orient:vertical;flex-direction:column">
@@ -498,7 +498,7 @@
                                 <t t-set="hdr_title" t-value="mod_line.product_id.name"/>
                                 <t t-set="hdr_sub" t-value="mod.adsa_quote_header_sub or ''"/>
                                 <t t-set="hdr_status" t-value="''"/>
-                                <t t-set="hdr_sec" t-value="'%d' % (3 + mod_line_index)"/>
+                                <t t-set="hdr_sec" t-value="'%02d' % (3 + mod_line_index)"/>
                             </t>
                             <div class="ckt"></div>
                             <div class="pc">
@@ -638,7 +638,7 @@
                         <t t-set="hdr_title" t-value="o.adsa_profiles_title or 'Perfiles y alcance operativo'"/>
                         <t t-set="hdr_sub" t-value="o.adsa_profiles_subtitle or ''"/>
                         <t t-set="hdr_status" t-value="''"/>
-                        <t t-set="hdr_sec" t-value="'%d' % (3 + len(module_lines))"/>
+                        <t t-set="hdr_sec" t-value="'%02d' % (3 + len(module_lines))"/>
                     </t>
                     <div class="ckt"></div>
                     <div class="pc">
@@ -744,7 +744,7 @@
                         <t t-set="hdr_title" t-value="o.adsa_economic_title or 'Resumen económico'"/>
                         <t t-set="hdr_sub" t-value="o.adsa_economic_subtitle or 'Servicio gestionado con valor operativo'"/>
                         <t t-set="hdr_status" t-value="''"/>
-                        <t t-set="hdr_sec" t-value="'%d' % (4 + len(module_lines))"/>
+                        <t t-set="hdr_sec" t-value="'%02d' % (4 + len(module_lines))"/>
                     </t>
                     <div class="ckt"></div>
                     <div class="pc">
@@ -846,7 +846,7 @@
                         <t t-set="hdr_title" t-value="o.adsa_closure_title or 'Cierre y próximos pasos'"/>
                         <t t-set="hdr_sub" t-value="o.adsa_closure_subtitle or 'Ruta clara para activar la siguiente fase'"/>
                         <t t-set="hdr_status" t-value="''"/>
-                        <t t-set="hdr_sec" t-value="'%d' % (5 + len(module_lines))"/>
+                        <t t-set="hdr_sec" t-value="'%02d' % (5 + len(module_lines))"/>
                     </t>
                     <div class="ckt"></div>
                     <div class="pc">
