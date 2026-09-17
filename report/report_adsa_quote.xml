@@ -801,18 +801,19 @@
                                     </t>
                                 </div>
                                 <div style="-webkit-box-flex:1;flex:1">
+                                    <span class="ot-badge">PAGO ÚNICO</span>
                                     <h5><t t-esc="ot_line.product_id.name"/></h5>
                                     <t t-set="ot_tmpl" t-value="ot_line.product_id.product_tmpl_id"/>
                                     <t t-if="ot_tmpl.adsa_quote_subtitle">
                                         <p style="color:#F59E0B;font-size:11px;font-weight:600;margin-bottom:5px"><t t-esc="ot_tmpl.adsa_quote_subtitle"/></p>
                                     </t>
                                     <t t-if="ot_line.product_id.description_sale">
-                                        <p style="margin-bottom:5px"><t t-esc="ot_line.product_id.description_sale"/></p>
+                                        <p class="ot-desc"><t t-esc="ot_line.product_id.description_sale"/></p>
                                     </t>
                                     <t t-if="ot_tmpl.get_monthly_notes()">
                                         <ul class="ot-notes">
                                             <t t-foreach="ot_tmpl.get_monthly_notes()" t-as="note">
-                                                <li><t t-esc="note"/></li>
+                                                <li><span class="ot-arr">→</span><t t-esc="note"/></li>
                                             </t>
                                         </ul>
                                     </t>
