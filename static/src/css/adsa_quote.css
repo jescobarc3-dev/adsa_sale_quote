@@ -901,47 +901,47 @@ body { font-family: var(--fb); color: var(--t1); line-height: 1.5; }
 .tl-conn-pending .tl-conn-line { background: rgba(148,163,184,0.18); box-shadow: none; }
 
 .cl-cols {
-  display: -webkit-box; display: flex; gap: 13px; margin-bottom: 14px;
+  display: -webkit-box; display: flex; gap: 10px; margin-bottom: 10px;
 }
 .ns-card {
   -webkit-box-flex: 1; flex: 1;
   background: var(--bg-card); border: 1px solid rgba(6,182,212,0.2);
-  border-radius: 12px; padding: 14px; position: relative; overflow: hidden;
+  border-radius: 10px; padding: 9px 12px; position: relative; overflow: hidden;
 }
 .ns-card-top { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #06B6D4, rgba(6,182,212,0.15)); }
-.ns-card h5 { font-family: var(--fh); font-size: 14px; font-weight: 800; color: var(--t1); margin-bottom: 10px; margin-top: 4px; }
-.ns-card ul { list-style: none; display: -webkit-box; display: flex; -webkit-box-orient: vertical; flex-direction: column; gap: 7px; }
-.ns-card ul li { display: -webkit-box; display: flex; align-items: center; gap: 9px; font-size: 12.5px; color: var(--t2); }
+.ns-card h5 { font-family: var(--fh); font-size: 12px; font-weight: 800; color: var(--t1); margin-bottom: 6px; margin-top: 3px; }
+.ns-card ul { list-style: none; display: -webkit-box; display: flex; -webkit-box-orient: vertical; flex-direction: column; gap: 4px; }
+.ns-card ul li { display: -webkit-box; display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--t2); }
 .ns-card ul li .sn {
-  width: 22px; height: 22px; border-radius: 50%;
+  width: 18px; height: 18px; border-radius: 50%;
   background: var(--cyan-dim); border: 1.5px solid rgba(6,182,212,0.35);
-  color: var(--cyan); font-size: 11px; font-weight: 800;
+  color: var(--cyan); font-size: 9px; font-weight: 800;
   display: -webkit-box; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 
 .val-card {
   -webkit-box-flex: 1; flex: 1;
   background: linear-gradient(120deg, #060f22 0%, #0a1a3a 60%, #0d1235 100%);
-  border: 1px solid rgba(3,105,161,0.3); border-radius: 12px;
-  padding: 14px; position: relative; overflow: hidden;
+  border: 1px solid rgba(3,105,161,0.3); border-radius: 10px;
+  padding: 9px 12px; position: relative; overflow: hidden;
 }
 .val-card-top { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #0369A1, rgba(3,105,161,0.15)); }
-.val-card h5 { font-family: var(--fh); font-size: 14px; font-weight: 800; color: #FFFFFF; margin-bottom: 8px; margin-top: 4px; position: relative; z-index: 1; }
-.val-card p  { font-size: 12.5px; color: rgba(148,163,184,0.9); line-height: 1.5; position: relative; z-index: 1; }
-.val-dt { margin-top: 10px; display: -webkit-box; display: flex; align-items: center; gap: 7px; font-size: 14.5px; color: #38BDF8; font-weight: 700; position: relative; z-index: 1; }
+.val-card h5 { font-family: var(--fh); font-size: 12px; font-weight: 800; color: #FFFFFF; margin-bottom: 5px; margin-top: 3px; position: relative; z-index: 1; }
+.val-card p  { font-size: 11px; color: rgba(148,163,184,0.9); line-height: 1.4; position: relative; z-index: 1; }
+.val-dt { margin-top: 7px; display: -webkit-box; display: flex; align-items: center; gap: 6px; font-size: 12px; color: #38BDF8; font-weight: 700; position: relative; z-index: 1; }
 
 .cl-msg {
   background: linear-gradient(120deg, #060f22 0%, #0a1a3a 60%, #0d1235 100%);
-  border: 1px solid rgba(6,182,212,0.25); border-radius: 12px;
-  padding: 15px 20px;
-  display: -webkit-box; display: flex; align-items: center; gap: 16px;
-  margin-bottom: 14px;
+  border: 1px solid rgba(6,182,212,0.25); border-radius: 10px;
+  padding: 9px 14px;
+  display: -webkit-box; display: flex; align-items: center; gap: 12px;
+  margin-bottom: 10px;
 }
-.cl-msg p { font-size: 12.5px; color: rgba(148,163,184,0.9); line-height: 1.65; }
+.cl-msg p { font-size: 11px; color: rgba(148,163,184,0.9); line-height: 1.5; }
 
 .acc {
   position: absolute;
-  bottom: 95px; left: 28px; right: 28px;
+  bottom: 160px; left: 28px; right: 28px;
   z-index: 5;
   display: -webkit-box; display: flex; gap: 13px;
 }
