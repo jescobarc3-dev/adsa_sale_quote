@@ -138,8 +138,9 @@
     <template id="report_sale_quote">
         <t t-call="web.html_container">
 
-            <!-- Botón flotante Descargar PDF — solo visible en pantalla, oculto al imprimir -->
+            <!-- Botones flotantes — solo visibles en pantalla, ocultos al imprimir -->
             <button class="adsa-pdf-btn" onclick="window.print()">&#128438; Descargar PDF</button>
+            <button class="adsa-reload-btn" onclick="window.location.reload()">&#8635; Recargar</button>
 
             <t t-foreach="docs" t-as="o">
                 <t t-set="total_pages" t-value="o.adsa_total_pages()"/>
