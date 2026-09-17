@@ -86,7 +86,7 @@
                             <field name="sequence" widget="handle"/>
                             <field name="title"/>
                             <field name="description"/>
-                            <field name="is_current" string="Actual"/>
+                            <field name="step_status"/>
                         </list>
                     </field>
                     <group col="1">

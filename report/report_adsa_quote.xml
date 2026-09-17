@@ -850,13 +850,19 @@
                         <div class="tl" style="margin-bottom:18px">
                             <t t-foreach="o.adsa_timeline_ids" t-as="step">
                                 <t t-if="not step_first">
-                                    <div class="tl-conn"><div class="tl-conn-line"></div></div>
+                                    <div t-attf-class="tl-conn tl-conn-#{prev_step_status or 'pending'}">
+                                        <div class="tl-conn-line"></div>
+                                    </div>
                                 </t>
-                                <div t-attf-class="tl-step#{' tl-step-current' if step.is_current else ''}">
-                                    <div class="tc"><t t-esc="step.sequence"/></div>
+                                <div t-attf-class="tl-step tl-step-#{step.step_status or 'pending'}">
+                                    <div class="tc">
+                                        <t t-if="step.step_status == 'done'">✓</t>
+                                        <t t-else=""><t t-esc="step.sequence"/></t>
+                                    </div>
                                     <h5><t t-esc="step.title"/></h5>
                                     <p><t t-esc="step.description or ''"/></p>
                                 </div>
+                                <t t-set="prev_step_status" t-value="step.step_status or 'pending'"/>
                             </t>
                         </div>
 
